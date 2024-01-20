@@ -1,3 +1,63 @@
+<script setup lang="ts">
+import { ref } from 'vue'
+import { useNotificationStore } from '@/stores/notification.store'
+import { signupAccount } from '@/api/account'
+
+const notifStore = useNotificationStore()
+
+const form = ref({
+  email: '',
+  name: '',
+  password1: '',
+  password2: ''
+})
+
+const errors: any = ref([])
+
+const resetForm = () => {
+  form.value.email = ''
+  form.value.name = ''
+  form.value.password1 = ''
+  form.value.password2 = ''
+}
+
+const formValidation = () => {
+  errors.value = []
+
+  if (form.value.email === '') {
+    errors.value.push('Your email is missing')
+  }
+
+  if (form.value.name === '') {
+    errors.value.push('Your name is missing')
+  }
+
+  if (form.value.password1 === '') {
+    errors.value.push('Your password is missing')
+  }
+
+  if (form.value.password1 !== form.value.password2) {
+    errors.value.push('Password does not match')
+  }
+}
+
+const submitForm = async () => {
+  formValidation()
+  if (errors.value.length === 0) {
+    try {
+      const res = await signupAccount(form.value)
+      if (res.data.message === 'success') {
+        notifStore.showNotification(5000, 'The user is registered. Please login!', 'bg-emerald-500')
+        resetForm()
+      } else {
+        notifStore.showNotification(5000, 'Something went wrong. Please try again.', 'bg-red-300')
+      }
+    } catch (error) {
+      console.error(error)
+    }
+  }
+}
+</script>
 <template>
   <div class="max-w-7xl mx-auto grid grid-cols-2 gap-4">
     <div class="main-left">
@@ -18,10 +78,11 @@
     </div>
     <div class="main-right">
       <div class="p-12 bg-white border border-gray-200 rounded-lg">
-        <form action="" class="space-y-6">
+        <form class="space-y-6" @submit.prevent="submitForm">
           <div>
             <label for="email">Name</label>
             <input
+              v-model="form.name"
               type="text"
               name="name"
               id="name"
@@ -32,6 +93,7 @@
           <div>
             <label for="email"> E-mail</label>
             <input
+              v-model="form.email"
               type="email"
               name="email"
               id="email"
@@ -42,6 +104,7 @@
           <div>
             <label for="email"> Password</label>
             <input
+              v-model="form.password1"
               type="password"
               name="password"
               id="password"
@@ -52,6 +115,7 @@
           <div>
             <label for="email"> Repeat Password</label>
             <input
+              v-model="form.password2"
               type="password"
               name="password-repeat"
               id="password-repeat"
@@ -59,6 +123,12 @@
               class="w-full mt-2 py-4 px-6 border border-gray-200 rounded-lg"
             />
           </div>
+
+          <template v-if="errors.length > 0">
+            <div class="bg-red-300 text-white rounded-lg p-6">
+              <p v-for="error in errors" :key="error">{{ error }}</p>
+            </div>
+          </template>
           <div>
             <button class="py-4 px-6 bg-blue-600 text-white rounded-lg">Sign up</button>
           </div>

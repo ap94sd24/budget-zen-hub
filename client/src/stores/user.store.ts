@@ -1,4 +1,6 @@
 import { defineStore } from 'pinia'
+import { getRefreshToken } from '@/api/account'
+import axios from 'axios'
 
 export const useUserStore = defineStore({
   id: 'user',
@@ -60,6 +62,17 @@ export const useUserStore = defineStore({
       localStorage.setItem('user.email', this.user.email)
 
       console.log('User -> ' + this.user)
+    },
+    async refreshToken() {
+      try {
+        const res = await getRefreshToken({ refresh: this.user.refresh })
+        this.user.access = res.data.access
+        localStorage.setItem('user.access', res.data.access)
+        axios.defaults.headers.common['Authorization'] = 'Bearer ' + res.data.access
+      } catch (error) {
+        console.error(error)
+        this.removeToken()
+      }
     }
   }
 })
