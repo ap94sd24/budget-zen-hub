@@ -46,7 +46,8 @@ const submitForm = async () => {
   if (errors.value.length === 0) {
     try {
       const res = await signupAccount(form.value)
-      if (res.data.message === 'success') {
+      console.log('Data--> ' + JSON.stringify(res.data, null, 2))
+      if (res.data.status === 'success') {
         notifStore.showNotification(5000, 'The user is registered. Please login!', 'bg-emerald-500')
         resetForm()
       } else {

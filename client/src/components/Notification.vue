@@ -14,4 +14,3 @@ const { isVisible, classes, message } = storeToRefs(notificationStore)
     {{ message }}
   </div>
 </template>
-@/stores/notification.store

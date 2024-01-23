@@ -12,7 +12,7 @@ export const useNotificationStore = defineStore({
     showNotification(ms: number, message: string, classes: string) {
       this.ms = ms
       this.classes = classes
-      this.messages = message
+      this.message = message
       this.isVisible = true
 
       // scroll up from bottom of screen to be visible
