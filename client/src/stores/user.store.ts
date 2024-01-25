@@ -1,6 +1,7 @@
 import { defineStore } from 'pinia'
-import { getRefreshToken } from '@/api/account'
+import { getRefreshToken, getUserAccount, loginAccount } from '@/api/account'
 import axios from 'axios'
+import http from '@/utils/https'
 
 export const useUserStore = defineStore({
   id: 'user',
@@ -62,6 +63,32 @@ export const useUserStore = defineStore({
       localStorage.setItem('user.email', this.user.email)
 
       console.log('User -> ' + this.user)
+    },
+
+    async loginUser(data: any) {
+      try {
+        const res = await loginAccount(data)
+        console.log('Res data is rn-> ' + JSON.stringify(res.data, null, 2))
+        if (res.data) {
+          this.setToken(res.data)
+          console.log('Res data -> ' + JSON.stringify(res.data, null, 2))
+          axios.defaults.headers.common['Authorization'] = 'Bearer ' + res.data.access
+        }
+      } catch (error) {
+        console.error(error)
+      }
+    },
+
+    async getUserInfo() {
+      try {
+        const res = await getUserAccount()
+        if (res.data) {
+          this.setUserInfo(res.data)
+          this.$router.push('/feed')
+        }
+      } catch (error) {
+        console.error(error)
+      }
     },
     async refreshToken() {
       try {

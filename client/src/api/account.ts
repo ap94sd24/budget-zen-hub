@@ -8,3 +8,5 @@ export const getRefreshToken = async (data: any) =>
 export const signupAccount = async (data: any) => await http.post('/signup/', JSON.stringify(data))
 
 export const loginAccount = async (data: any) => await http.post('/login/', JSON.stringify(data))
+
+export const getUserAccount = async () => await http.get('/me/')

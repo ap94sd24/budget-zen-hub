@@ -59,9 +59,12 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 import { useUserStore } from '@/stores/user.store'
-import { loginAccount } from '@/api/account'
+import { loginAccount, getUserAccount } from '@/api/account'
 import { useNotificationStore } from '@/stores/notification.store'
+import { useRouter } from 'vue-router'
 import axios from 'axios'
+
+const router = useRouter()
 
 const userStore = useUserStore()
 const notificationStore = useNotificationStore()
@@ -94,26 +97,31 @@ const submitForm = async () => {
   formValidation()
 
   if (errors.value.length === 0) {
-    try {
-      const res = await loginAccount(form.value)
+    // TODO: refactor this to use global interceptors for setting authorization
+    await axios
+      .post('/api/login/', form.value)
+      .then((response) => {
+        userStore.setToken(response.data)
 
-      if (res.data) {
-        userStore.setToken(res.data)
-        axios.defaults.headers.common['Authorization'] = 'Bearer ' + res.data.access
-      }
+        console.log(response.data.access)
 
-      // if (res.data.status === 'success') {
-      //   notificationStore.showNotification(5000, 'Registration successful!', 'bg-emerald-500')
-      // } else {
-      //   notificationStore.showNotification(
-      //     5000,
-      //     'Something went wrong. Please try again.',
-      //     'bg-red-300'
-      //   )
-      // }
-    } catch (error) {
-      console.error(error)
-    }
+        axios.defaults.headers.common['Authorization'] = 'Bearer ' + response.data.access
+      })
+      .catch((error) => {
+        console.log('error', error)
+      })
+
+    await axios
+      .get('/api/me/')
+      .then((response) => {
+        userStore.setUserInfo(response.data)
+        console.log('Hit here!!!!!')
+
+        router.push('/feed')
+      })
+      .catch((error) => {
+        console.log('error', error)
+      })
   }
 }
 </script>
