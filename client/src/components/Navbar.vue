@@ -1,12 +1,21 @@
+<script setup lang="ts">
+import { RouterLink } from 'vue-router'
+import { useUserStore } from '@/stores/user.store'
+import { storeToRefs } from 'pinia'
+
+const userStore = useUserStore()
+
+const { user } = storeToRefs(userStore)
+</script>
 <template>
   <nav class="py-10 px-8 border-b border-gray-200">
     <div class="max-w-7xl mx-auto">
       <div class="flex items-center justify-between">
         <div class="menu-left">
-          <a href="#" class="text-xl">BudgetZenHub</a>
+          <a href="#" class="text-xl">BudgetZenHub </a>
         </div>
 
-        <div class="menu-center flex space-x-12">
+        <div v-if="user.isAuthenticated" class="menu-center flex space-x-12">
           <a href="#" class="text-purple-700">
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -77,9 +86,19 @@
         </div>
 
         <div class="menu-right">
-          <a href="#">
-            <img src="https://i.pravatar.cc/40?img=2" class="rounded-full" />
-          </a>
+          <template v-if="user.isAuthenticated">
+            <a href="#">
+              <img src="https://i.pravatar.cc/40?img=2" class="rounded-full" />
+            </a>
+          </template>
+          <template v-else>
+            <RouterLink to="/login" class="py-4 px-6 mr-4 bg-gray-600 text-white rounded-lg"
+              >Login</RouterLink
+            >
+            <RouterLink to="/signup" class="py-4 px-6 bg-blue-600 text-white rounded-lg"
+              >Sign Up</RouterLink
+            >
+          </template>
         </div>
       </div>
     </div>

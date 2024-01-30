@@ -1,3 +1,51 @@
+<script setup lang="ts">
+import { ref } from 'vue'
+import { useUserStore } from '@/stores/user.store'
+import { loginAccount, getUserAccount } from '@/api/account'
+import { useNotificationStore } from '@/stores/notification.store'
+import { useRouter } from 'vue-router'
+import http from '@/utils/https'
+
+const router = useRouter()
+
+const userStore = useUserStore()
+const notificationStore = useNotificationStore()
+
+const form = ref({
+  email: '',
+  password: ''
+})
+
+const errors: any = ref([])
+
+const resetForm = () => {
+  form.value.email = ''
+  form.value.password = ''
+}
+
+const formValidation = () => {
+  errors.value = []
+
+  if (form.value.email === '') {
+    errors.value.push('Your email is missing')
+  }
+
+  if (form.value.password === '') {
+    errors.value.push('Your password is missing')
+  }
+}
+
+const submitForm = async () => {
+  formValidation()
+
+  if (errors.value.length === 0) {
+    await userStore.loginUser(form.value)
+    const isSuccess = await userStore.getUserInfo()
+
+    if (isSuccess) router.push('/feed')
+  }
+}
+</script>
 <template>
   <div class="max-w-7xl mx-auto grid grid-cols-2 gap-4">
     <div class="main-left">
@@ -56,72 +104,3 @@
     </div>
   </div>
 </template>
-<script setup lang="ts">
-import { ref } from 'vue'
-import { useUserStore } from '@/stores/user.store'
-import { loginAccount, getUserAccount } from '@/api/account'
-import { useNotificationStore } from '@/stores/notification.store'
-import { useRouter } from 'vue-router'
-import axios from 'axios'
-
-const router = useRouter()
-
-const userStore = useUserStore()
-const notificationStore = useNotificationStore()
-
-const form = ref({
-  email: '',
-  password: ''
-})
-
-const errors: any = ref([])
-
-const resetForm = () => {
-  form.value.email = ''
-  form.value.password = ''
-}
-
-const formValidation = () => {
-  errors.value = []
-
-  if (form.value.email === '') {
-    errors.value.push('Your email is missing')
-  }
-
-  if (form.value.password === '') {
-    errors.value.push('Your password is missing')
-  }
-}
-
-const submitForm = async () => {
-  formValidation()
-
-  if (errors.value.length === 0) {
-    // TODO: refactor this to use global interceptors for setting authorization
-    await axios
-      .post('/api/login/', form.value)
-      .then((response) => {
-        userStore.setToken(response.data)
-
-        console.log(response.data.access)
-
-        axios.defaults.headers.common['Authorization'] = 'Bearer ' + response.data.access
-      })
-      .catch((error) => {
-        console.log('error', error)
-      })
-
-    await axios
-      .get('/api/me/')
-      .then((response) => {
-        userStore.setUserInfo(response.data)
-        console.log('Hit here!!!!!')
-
-        router.push('/feed')
-      })
-      .catch((error) => {
-        console.log('error', error)
-      })
-  }
-}
-</script>

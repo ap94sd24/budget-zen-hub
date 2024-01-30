@@ -26,7 +26,6 @@ export const useUserStore = defineStore({
         this.user.isAuthenticated = true
 
         this.refreshToken()
-        console.log('Init user -> ' + this.user)
       }
     },
     setToken(data: any) {
@@ -61,8 +60,6 @@ export const useUserStore = defineStore({
       localStorage.setItem('user.id', this.user.id)
       localStorage.setItem('user.name', this.user.name)
       localStorage.setItem('user.email', this.user.email)
-
-      console.log('User -> ' + this.user)
     },
 
     async loginUser(data: any) {
@@ -72,7 +69,7 @@ export const useUserStore = defineStore({
         if (res.data) {
           this.setToken(res.data)
           console.log('Res data -> ' + JSON.stringify(res.data, null, 2))
-          axios.defaults.headers.common['Authorization'] = 'Bearer ' + res.data.access
+          http.defaults.headers.common['Authorization'] = 'Bearer ' + res.data.access
         }
       } catch (error) {
         console.error(error)
@@ -84,10 +81,12 @@ export const useUserStore = defineStore({
         const res = await getUserAccount()
         if (res.data) {
           this.setUserInfo(res.data)
-          this.$router.push('/feed')
+          return true
         }
+        return false
       } catch (error) {
         console.error(error)
+        return false
       }
     },
     async refreshToken() {
