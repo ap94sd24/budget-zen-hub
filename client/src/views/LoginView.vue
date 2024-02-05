@@ -1,50 +1,50 @@
 <script setup lang="ts">
-import { ref } from 'vue'
-import { useUserStore } from '@/stores/user.store'
-import { loginAccount, getUserAccount } from '@/api/account'
-import { useNotificationStore } from '@/stores/notification.store'
-import { useRouter } from 'vue-router'
-import http from '@/utils/https'
+  import { ref } from 'vue';
+  import { useUserStore } from '@/stores/user.store';
+  import { loginAccount, getUserAccount } from '@/api/account';
+  import { useNotificationStore } from '@/stores/notification.store';
+  import { useRouter } from 'vue-router';
+  import http from '@/utils/https';
 
-const router = useRouter()
+  const router = useRouter();
 
-const userStore = useUserStore()
-const notificationStore = useNotificationStore()
+  const userStore = useUserStore();
+  const notificationStore = useNotificationStore();
 
-const form = ref({
-  email: '',
-  password: ''
-})
+  const form = ref({
+    email: '',
+    password: '',
+  });
 
-const errors: any = ref([])
+  const errors: any = ref([]);
 
-const resetForm = () => {
-  form.value.email = ''
-  form.value.password = ''
-}
+  const resetForm = () => {
+    form.value.email = '';
+    form.value.password = '';
+  };
 
-const formValidation = () => {
-  errors.value = []
+  const formValidation = () => {
+    errors.value = [];
 
-  if (form.value.email === '') {
-    errors.value.push('Your email is missing')
-  }
+    if (form.value.email === '') {
+      errors.value.push('Your email is missing');
+    }
 
-  if (form.value.password === '') {
-    errors.value.push('Your password is missing')
-  }
-}
+    if (form.value.password === '') {
+      errors.value.push('Your password is missing');
+    }
+  };
 
-const submitForm = async () => {
-  formValidation()
+  const submitForm = async () => {
+    formValidation();
 
-  if (errors.value.length === 0) {
-    await userStore.loginUser(form.value)
-    const isSuccess = await userStore.getUserInfo()
+    if (errors.value.length === 0) {
+      await userStore.loginUser(form.value);
+      const isSuccess = await userStore.getUserInfo();
 
-    if (isSuccess) router.push('/feed')
-  }
-}
+      if (isSuccess) router.push('/feed');
+    }
+  };
 </script>
 <template>
   <div class="max-w-7xl mx-auto grid grid-cols-2 gap-4">

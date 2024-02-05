@@ -1,11 +1,11 @@
 <script setup lang="ts">
-import { RouterLink } from 'vue-router'
-import { useUserStore } from '@/stores/user.store'
-import { storeToRefs } from 'pinia'
+  import { RouterLink } from 'vue-router';
+  import { useUserStore } from '@/stores/user.store';
+  import { storeToRefs } from 'pinia';
 
-const userStore = useUserStore()
+  const userStore = useUserStore();
 
-const { user } = storeToRefs(userStore)
+  const { user } = storeToRefs(userStore);
 </script>
 <template>
   <nav class="py-10 px-8 border-b border-gray-200">
@@ -87,9 +87,9 @@ const { user } = storeToRefs(userStore)
 
         <div class="menu-right">
           <template v-if="user.isAuthenticated">
-            <a href="#">
+            <RouterLink :to="{ name: 'profile', params: { id: user.id } }">
               <img src="https://i.pravatar.cc/40?img=2" class="rounded-full" />
-            </a>
+            </RouterLink>
           </template>
           <template v-else>
             <RouterLink to="/login" class="py-4 px-6 mr-4 bg-gray-600 text-white rounded-lg"

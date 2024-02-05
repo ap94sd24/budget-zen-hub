@@ -2,54 +2,29 @@
   import PeopleToConnect from '@/components/PeopleToConnect.vue';
   import Trends from '@/components/Trends.vue';
 
-  import { getAllPosts, savePost } from '@/api/post';
   import { onMounted, ref } from 'vue';
+  import { usePostStore } from '@/stores/post.store';
+  import { storeToRefs } from 'pinia';
 
-  const posts: any = ref([]);
+  const postStore = usePostStore();
 
-  const getFeed = async () => {
-    try {
-      const res = await getAllPosts();
-      console.log('Res data -> ' + JSON.stringify(res.data, null, 2));
-      if (res.data) posts.value = res.data;
-    } catch (error) {
-      console.error(error);
-    }
-  };
+  const { posts } = storeToRefs(postStore);
 
   onMounted(async () => {
-    await getFeed();
+    await postStore.getFeed();
   });
 
   const body = ref('');
 
   const submitForm = async () => {
-    try {
-      const res = await savePost({ body: body.value });
-      if (res.data) {
-        posts.value.unshift(res.data);
-        body.value = '';
-      }
-    } catch (error) {
-      console.error(error);
-    }
+    await postStore.savePost(body.value);
+
+    body.value = '';
   };
 </script>
 <template>
   <div class="max-w-7xl mx-auto grid grid-cols-4 gap-4">
-    <div class="main-left col-span-1">
-      <div class="p-4 bg-white border border-gray-200 text-center rounded-lg">
-        <img src="https://i.pravatar.cc/300?img=70" alt="Avatar img" class="mb-6 rounded-full" />
-
-        <p><strong>TEST</strong></p>
-
-        <div class="mt-6 flex space-x-8 justify-around">
-          <p class="text-xs text-gray-500">500 followers</p>
-          <p class="text-xs text-gray-500">120 posts</p>
-        </div>
-      </div>
-    </div>
-    <div class="main-center col-span-2 space-y-6">
+    <div class="main-center col-span-3 space-y-6">
       <div class="bg-white border border-gray-200 rounded-lg">
         <form @submit.prevent="submitForm" method="post">
           <div class="p-4">
