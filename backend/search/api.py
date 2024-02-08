@@ -17,8 +17,7 @@ def search(request):
   posts = Post.objects.filter(body__icontains=query)
   posts_serializer = PostSerializer(posts, many=True)
   
-  print('query', query)
-  print('post data -> ', posts_serializer.data)
+  
   return JsonResponse({'users': user_serializer.data, 'posts': posts_serializer.data},
   safe=False)
   
