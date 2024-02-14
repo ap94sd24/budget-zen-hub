@@ -11,6 +11,8 @@
 
   import FeedItem from '@/components/FeedItem.vue';
 
+  import { addFollower } from '@/api/follower';
+
   const userStore = useUserStore();
   const route = useRoute();
 
@@ -38,6 +40,16 @@
       immediate: true,
     }
   );
+
+  const sendFollowerRequest = async () => {
+    try {
+      const res = await addFollower(route.params.id);
+
+      if (res.data) console.log('Res data -> ' + JSON.stringify(res.data, null, 2));
+    } catch (error) {
+      console.error(error);
+    }
+  };
 </script>
 <template>
   <div class="max-w-7xl mx-auto grid grid-cols-4 gap-4">
@@ -52,6 +64,14 @@
         <div class="mt-6 flex space-x-8 justify-around">
           <p class="text-xs text-gray-500">500 followers</p>
           <p class="text-xs text-gray-500">120 posts</p>
+        </div>
+        <div class="mt-6">
+          <button
+            class="inline-block py-3 px-5 bg-blue-600 text-xs text-white rounded-lg"
+            @click="sendFollowerRequest"
+          >
+            Send follower request
+          </button>
         </div>
       </div>
     </div>

@@ -16,7 +16,7 @@
         </div>
 
         <div v-if="user.isAuthenticated" class="menu-center flex space-x-12">
-          <a href="#" class="text-purple-700">
+          <a href="#" class="text-blue-700 dark:text-blue-200">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               fill="none"
@@ -67,7 +67,7 @@
             </svg>
           </a>
 
-          <a href="#">
+          <RouterLink to="/search">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               fill="none"
@@ -82,7 +82,7 @@
                 d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z"
               ></path>
             </svg>
-          </a>
+          </RouterLink>
         </div>
 
         <div class="menu-right">
