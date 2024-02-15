@@ -4,7 +4,11 @@
 <template>
   <div class="mb-6 flex items-center justify-between">
     <div class="flex item-center space-x-6">
-      <img src="https://i.pravatar.cc/300?img=70" alt="" class="w-[40px] rounded-full" />
+      <img
+        src="https://gravatar.com/avatar/5ac01b7cd1192f1c1c60bf84eab96570?s=400&d=robohash&r=x"
+        alt=""
+        class="w-[40px] rounded-full"
+      />
       <p>
         <strong>{{ post.created_by.name }}</strong>
       </p>

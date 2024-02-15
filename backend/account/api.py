@@ -4,7 +4,7 @@ from rest_framework.decorators import api_view, authentication_classes, permissi
 
 from .forms import SignupForm
 from .models import User, FollowerRequest
-from .serializers import UserSerializer
+from .serializers import UserSerializer, FollowerRequestSerializer
 
 
 @api_view(['GET'])
@@ -38,10 +38,27 @@ def signup(request):
     
   return JsonResponse({'status': message})
 
+@api_view(['GET'])
+def followers(request, pk):
+  user = User.objects.get(pk=pk)
+  requests = []
+  
+  if user == request.user:
+    requests = FollowerRequest.objects.filter(created_for=request.user)
+    requests = FollowerRequestSerializer(requests, many=True)
+    requests = requests.data
+  followers = user.followers.all()
+  
+  return JsonResponse({
+      'user': UserSerializer(user).data,
+      'followers': UserSerializer(followers, many=True).data,
+      'requests': requests
+    }, safe=False)
+
 @api_view(['POST'])
 def send_follower_request(request, pk): 
   user = User.objects.get(pk=pk)
   
-  follower_request = FollowerRequest(created_for=user, created_by=request.user)
+  follower_request = FollowerRequest.objects.create(created_for=user, created_by=request.user)
   
   return JsonResponse({'message': 'Follower added!'})

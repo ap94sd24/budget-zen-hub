@@ -8,5 +8,6 @@ urlpatterns = [
   path('signup/', api.signup, name='signup'),
   path('login/', TokenObtainPairView.as_view(), name='token_obtain'),
   path('refresh/', TokenRefreshView.as_view(), name='token-refresh'),
-  path('followers/request/<uuid:pk>/', api.send_follower_request, name='send_follower_request'),
+  path('followers/<uuid:pk>/request/', api.send_follower_request, name='send_follower_request'),
+  path('followers/<uuid:pk>/', api.followers, name='followers'),
 ]
