@@ -21,16 +21,17 @@
   <div class="max-w-7xl mx-auto grid grid-cols-4 gap-4">
     <div class="main-left col-span-1">
       <div class="p-4 bg-white border border-gray-200 text-center rounded-lg">
-        <img src="https://i.pravatar.cc/300?img=70" class="mb-6 rounded-full" />
+        <img
+          src="https://gravatar.com/avatar/5ac01b7cd1192f1c1c60bf84eab96570?s=200&d=robohash&r=x"
+          class="mb-6 rounded-full"
+        />
 
         <p>
           <strong>{{ user.name }}</strong>
         </p>
 
         <div class="mt-6 flex space-x-8 justify-around">
-          <p class="text-xs text-gray-500">
-            {{ user.followers_count > 0 ? user.followers_count : 0 }} followers
-          </p>
+          <p class="text-xs text-gray-500">{{ user.followers_count }} followers</p>
           <p class="text-xs text-gray-500">120 posts</p>
         </div>
       </div>
@@ -91,7 +92,10 @@
           v-for="user in followers"
           :key="user.id"
         >
-          <img src="https://i.pravatar.cc/300?img=70" class="mb-6 rounded-full" />
+          <img
+            src="https://gravatar.com/avatar/5ac01b7cd1192f1c1c60bf84eab96570?s=300&d=robohash&r=x"
+            class="mb-6 rounded-full"
+          />
 
           <p>
             <strong>

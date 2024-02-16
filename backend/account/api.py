@@ -43,8 +43,10 @@ def followers(request, pk):
   user = User.objects.get(pk=pk)
   requests = []
   
+  
+  
   if user == request.user:
-    requests = FollowerRequest.objects.filter(created_for=request.user)
+    requests = FollowerRequest.objects.filter(created_for=request.user, status=FollowerRequest.SENT)
     requests = FollowerRequestSerializer(requests, many=True)
     requests = requests.data
   followers = user.followers.all()
@@ -59,6 +61,31 @@ def followers(request, pk):
 def send_follower_request(request, pk): 
   user = User.objects.get(pk=pk)
   
-  follower_request = FollowerRequest.objects.create(created_for=user, created_by=request.user)
+  followerReqMade = FollowerRequest.objects.filter(created_for=request.user).filter(created_by=user)
+  alreadyAFollower = FollowerRequest.objects.filter(created_for=user).filter(created_by=request.user)
   
-  return JsonResponse({'message': 'Follower added!'})
+  if not followerReqMade and not alreadyAFollower:
+    follower_request = FollowerRequest.objects.create(created_for=user, created_by=request.user)
+  
+    return JsonResponse({'message': 'Follower added!'})
+  else: 
+    return JsonResponse({'message': 'request already made!'})
+
+@api_view(['POST'])
+def handle_request(request, pk, status):
+  user = User.objects.get(pk=pk)
+  follower_request = FollowerRequest.objects.filter(created_for=request.user).get(created_by=user)
+  follower_request.status = status
+  follower_request.save()
+  
+  user.followers.add(request.user)
+  user.followers_count = user.followers_count + 1
+  user.save()
+  
+  request_user = request.user
+  request_user.followers_count = request_user.followers_count + 1
+  request_user.save()
+  
+  return JsonResponse({'message': 'Follower updated!'})
+  
+  
