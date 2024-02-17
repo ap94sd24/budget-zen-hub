@@ -12,7 +12,12 @@ from .models import Post
 # Create your views here.
 @api_view(['GET'])
 def post_list(request):
-  posts = Post.objects.all()
+  user_ids = [request.user.id]
+  
+  for user in request.user.followers.all():
+      user_ids.append(user.id)
+      
+  posts = Post.objects.filter(created_by_id__in=list(user_ids))
   
   serializer = PostSerializer(posts, many=True)
   

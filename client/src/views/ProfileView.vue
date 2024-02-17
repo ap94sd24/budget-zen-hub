@@ -63,7 +63,7 @@
           <RouterLink
             :to="{ name: 'followers', params: { id: user?.id } }"
             class="text-xs text-gray-500"
-            >{{ user.followers_count }} followers</RouterLink
+            >{{ user?.followers_count }} followers</RouterLink
           >
           <p class="text-xs text-gray-500">120 posts</p>
         </div>
@@ -103,7 +103,7 @@
         </div>
       </template>
 
-      <template v-for="post in posts" :key="post.id">
+      <template v-for="post in posts" :key="post?.id">
         <div class="p-4 bg-white border border-gray-200 rounded-lg">
           <FeedItem :post="post" />
         </div>
