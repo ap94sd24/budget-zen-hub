@@ -50,7 +50,7 @@
         </form>
       </div>
 
-      <template v-for="post in posts" :key="post.id">
+      <template v-for="post in posts" :key="post?.id">
         <div class="p-4 bg-white border border-gray-200 rounded-lg">
           <FeedItem :post="post" />
         </div>

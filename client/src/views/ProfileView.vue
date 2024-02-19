@@ -1,6 +1,6 @@
 <script setup lang="ts">
   import { onMounted, ref, watch } from 'vue';
-  import { useRoute } from 'vue-router';
+  import { useRoute, useRouter } from 'vue-router';
   import { storeToRefs } from 'pinia';
 
   import { usePostStore } from '@/stores/post.store';
@@ -15,6 +15,7 @@
   const userStore = useUserStore();
   const followerStore = useFollowerStore();
   const route = useRoute();
+  const router = useRouter();
 
   onMounted(async () => {
     await postStore.getAllPostsForUser(route.params.id);
@@ -44,6 +45,11 @@
   const sendFollowerRequest = async () => {
     await followerStore.addFollowerRequest(route.params.id);
   };
+
+  const logout = () => {
+    userStore.removeToken();
+    router.push('/login');
+  };
 </script>
 <template>
   <div class="max-w-7xl mx-auto grid grid-cols-4 gap-4">
@@ -69,10 +75,18 @@
         </div>
         <div class="mt-6">
           <button
+            v-if="userStore.user.id !== user?.id"
             class="inline-block py-3 px-5 bg-blue-600 text-xs text-white rounded-lg"
             @click="sendFollowerRequest"
           >
             Send follower request
+          </button>
+          <button
+            v-if="userStore.user.id === user?.id"
+            class="inline-block py-3 px-5 bg-red-600 dark:bg-red-400 text-xs text-white rounded-lg"
+            @click="logout"
+          >
+            Log out
           </button>
         </div>
       </div>

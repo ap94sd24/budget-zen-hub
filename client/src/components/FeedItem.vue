@@ -1,5 +1,12 @@
 <script setup lang="ts">
+  import { usePostStore } from '@/stores/post.store';
   defineProps(['post']);
+
+  const postStore = usePostStore();
+
+  const likePost = async (id: string) => {
+    await postStore.likePost(id);
+  };
 </script>
 <template>
   <div class="mb-6 flex items-center justify-between">
@@ -10,10 +17,10 @@
         class="w-[40px] rounded-full"
       />
       <p>
-        <strong>{{ post.created_by.name }}</strong>
+        <strong>{{ post?.created_by.name }}</strong>
       </p>
     </div>
-    <div class="text-gray-600 text-sm">{{ post.created_at_formatted }} ago</div>
+    <div class="text-gray-600 text-sm">{{ post?.created_at_formatted }} ago</div>
   </div>
 
   <!-- <img
@@ -21,17 +28,17 @@
             alt=""
             class="w-full rounded-bg"
           /> -->
-  <p>{{ post.body }}</p>
+  <p>{{ post?.body }}</p>
 
   <div class="my-6 flex justify-between">
     <div class="flex space-x-6">
-      <div class="flex items-center space-x-2">
+      <div class="cursor-pointer flex items-center space-x-2" @click="likePost(post.id)">
         <svg
           xmlns="http://www.w3.org/2000/svg"
           fill="none"
           viewBox="0 0 24 24"
           stroke-width="1.5"
-          stroke="currentColor"
+          :stroke="`${post.likes_count > 0 ? 'red' : 'black'}`"
           class="w-6 h-6"
         >
           <path
@@ -40,7 +47,7 @@
             d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12z"
           ></path>
         </svg>
-        <span class="text-gray-500 text-xs">82 likes</span>
+        <span class="text-gray-500 text-xs">{{ post.likes_count }} likes</span>
       </div>
       <div class="flex items-center space-x-2">
         <svg
@@ -58,7 +65,11 @@
           ></path>
         </svg>
 
-        <span class="text-gray-500 text-xs">0 comments</span>
+        <RouterLink
+          :to="{ name: 'postdetailview', params: { id: post.id } }"
+          class="text-gray-500 text-xs"
+          >0 comments</RouterLink
+        >
       </div>
     </div>
     <div>
