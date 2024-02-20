@@ -1,46 +1,42 @@
+<script setup lang="ts">
+  import { onMounted } from 'vue';
+  import { useChatStore } from '@/stores/chat.store';
+  import { storeToRefs } from 'pinia';
+  import { useUserStore } from '@/stores/user.store';
+
+  const chatStore = useChatStore();
+
+  const userStore = useUserStore();
+
+  const { conversations } = storeToRefs(chatStore);
+  const { user } = storeToRefs(userStore);
+
+  onMounted(async () => {
+    await chatStore.getChats();
+  });
+</script>
 <template>
   <div class="max-w-7xl mx-auto grid grid-cols-4 gap-4">
     <div class="main-left col-span-1">
       <div class="p-4 bg-white border border-gray-200 rounded-lg">
         <div class="space-y-4">
-          <div class="flex items-center justify-between">
+          <div
+            class="flex items-center justify-between"
+            v-for="conversation in conversations"
+            :key="conversation.id"
+          >
             <div class="flex items-center space-x-2">
               <img
                 src="https://i.pravatar.cc/300?img=70"
                 alt="Gravatar img"
                 class="w-[40px] rounded-full"
               />
-
-              <p class="text-xs"><strong>Test description</strong></p>
+              <template v-for="userObj in conversation.users" :key="user.id">
+                <p v-if="user.id !== userObj.id" class="text-xs font-bold">test</p>
+              </template>
             </div>
 
-            <span class="text-xs text-gray-500">19 minutes ago</span>
-          </div>
-          <div class="flex items-center justify-between">
-            <div class="flex items-center space-x-2">
-              <img
-                src="https://i.pravatar.cc/300?img=68"
-                alt="Gravatar img"
-                class="w-[40px] rounded-full"
-              />
-
-              <p class="text-xs"><strong>Test description</strong></p>
-            </div>
-
-            <span class="text-xs text-gray-500">19 minutes ago</span>
-          </div>
-          <div class="flex items-center justify-between">
-            <div class="flex items-center space-x-2">
-              <img
-                src="https://i.pravatar.cc/300?img=69"
-                alt="Gravatar img"
-                class="w-[40px] rounded-full"
-              />
-
-              <p class="text-xs"><strong>Test description</strong></p>
-            </div>
-
-            <span class="text-xs text-gray-500">19 minutes ago</span>
+            <span class="text-xs text-gray-500">{{ conversation.modified_at_formatted }} ago</span>
           </div>
         </div>
       </div>

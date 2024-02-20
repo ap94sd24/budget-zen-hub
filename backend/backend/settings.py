@@ -52,6 +52,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'account',
     'post',
+    'chat',
     'search',
     'rest_framework',
     'rest_framework_simplejwt',

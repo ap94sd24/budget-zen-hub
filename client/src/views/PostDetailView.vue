@@ -37,7 +37,7 @@
 
     if (data) {
       body.value = '';
-      post.value.comments.unshift(data);
+      post.value.comments.push(data);
       post.value.comments_count += 1;
     }
   };

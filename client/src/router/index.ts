@@ -3,11 +3,11 @@ import HomeView from '../views/HomeView.vue';
 import SignUpView from '../views/SignUpView.vue';
 import LoginView from '../views/LoginView.vue';
 import FeedView from '../views/FeedView.vue';
-import MessagesView from '@/views/MessagesView.vue';
 import SearchView from '@/views/SearchView.vue';
 import ProfileView from '@/views/ProfileView.vue';
 import FollowersView from '@/views/FollowersView.vue';
 import PostDetailView from '@/views/PostDetailView.vue';
+import ChatView from '@/views/ChatView.vue';
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -28,6 +28,11 @@ const router = createRouter({
       component: FeedView,
     },
     {
+      path: '/chat',
+      name: 'chat',
+      component: ChatView,
+    },
+    {
       path: '/profile/:id',
       name: 'profile',
       component: ProfileView,
@@ -42,11 +47,7 @@ const router = createRouter({
       name: 'search',
       component: SearchView,
     },
-    {
-      path: '/messages',
-      name: 'messages',
-      component: MessagesView,
-    },
+
     {
       path: '/signup',
       name: 'signup',

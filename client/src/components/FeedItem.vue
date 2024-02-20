@@ -68,7 +68,7 @@
         <RouterLink
           :to="{ name: 'postdetailview', params: { id: post.id } }"
           class="text-gray-500 text-xs"
-          >0 comments</RouterLink
+          >{{ post.comments_count }} comments</RouterLink
         >
       </div>
     </div>
