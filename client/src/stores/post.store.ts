@@ -58,6 +58,7 @@ export const usePostStore = defineStore({
         const res = await getAllPostsForUser(id);
 
         if (res.data) {
+          console.log('Res data -> ' + JSON.stringify(res.data, null, 2));
           this.posts = res.data.posts;
           this.user = res.data.user;
         }

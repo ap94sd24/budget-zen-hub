@@ -8,3 +8,6 @@ export const getActiveConversation = async (id: any) => await http.get(`${rootUr
 
 export const sendMsgForActiveChat = async (id: any, data: any) =>
   await http.post(`${rootUrl}/${id}/send/`, JSON.stringify({ body: data }));
+
+export const sendDmRequest = async (id: string) =>
+  await http.get(`${rootUrl}/${id}/get-or-create/`);

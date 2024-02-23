@@ -29,8 +29,12 @@ def post_list_profile(request, pk):
   user = User.objects.get(pk=pk)
   posts = Post.objects.filter(created_by_id=pk)
   
+  
+  
   posts_serializer = PostSerializer(posts, many=True)
   user_serializer = UserSerializer(user)
+  
+  print(posts_serializer.data)
   return JsonResponse({
     'posts': posts_serializer.data, 
     'user': user_serializer.data

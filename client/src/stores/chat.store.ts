@@ -1,5 +1,11 @@
 import { defineStore } from 'pinia';
-import { getConversations, getActiveConversation, sendMsgForActiveChat } from '@/api/chat';
+import {
+  getConversations,
+  getActiveConversation,
+  sendMsgForActiveChat,
+  sendDmRequest,
+} from '@/api/chat';
+ 
 
 export const useChatStore = defineStore({
   id: 'chat',
@@ -8,6 +14,13 @@ export const useChatStore = defineStore({
     activeConversation: {},
   }),
   actions: {
+    async getDirectMsgRequest(id: any) {
+      try {
+        await sendDmRequest(id);
+      } catch (error) {
+        console.error(error);
+      }
+    },
     async getChats() {
       try {
         const res = await getConversations();

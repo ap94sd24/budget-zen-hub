@@ -6,14 +6,16 @@
   import { usePostStore } from '@/stores/post.store';
   import { useUserStore } from '@/stores/user.store';
   import { useFollowerStore } from '@/stores/follower.store';
+  import { useChatStore } from '@/stores/chat.store';
 
   import Trends from '@/components/Trends.vue';
   import PeopleToConnect from '@/components/PeopleToConnect.vue';
-
   import FeedItem from '@/components/FeedItem.vue';
 
   const userStore = useUserStore();
   const followerStore = useFollowerStore();
+  const chatStore = useChatStore();
+
   const route = useRoute();
   const router = useRouter();
 
@@ -46,6 +48,11 @@
     await followerStore.addFollowerRequest(route.params.id);
   };
 
+  const sendDirectMsg = async () => {
+    await chatStore.getDirectMsgRequest(route.params.id);
+    router.push('/chat');
+  };
+
   const logout = () => {
     userStore.removeToken();
     router.push('/login');
@@ -71,7 +78,7 @@
             class="text-xs text-gray-500"
             >{{ user?.followers_count }} followers</RouterLink
           >
-          <p class="text-xs text-gray-500">120 posts</p>
+          <p class="text-xs text-gray-500">{{ user.posts_count }} posts</p>
         </div>
         <div class="mt-6">
           <button
@@ -80,6 +87,13 @@
             @click="sendFollowerRequest"
           >
             Send follower request
+          </button>
+          <button
+            v-if="userStore.user.id !== user?.id"
+            class="inline-block mt-4 py-3 px-5 bg-blue-600 text-xs text-white rounded-lg"
+            @click="sendDirectMsg"
+          >
+            Want to chat?
           </button>
           <button
             v-if="userStore.user.id === user?.id"
