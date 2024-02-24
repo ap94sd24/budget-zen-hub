@@ -34,7 +34,6 @@ def post_list_profile(request, pk):
   posts_serializer = PostSerializer(posts, many=True)
   user_serializer = UserSerializer(user)
   
-  print(posts_serializer.data)
   return JsonResponse({
     'posts': posts_serializer.data, 
     'user': user_serializer.data
@@ -52,7 +51,7 @@ def post_create(request):
     
     serializer = PostSerializer(post)
     
-    return JsonResponse(serializer.data,safe=False )
+    return JsonResponse(serializer.data,safe=False)
   
   else:
     return JsonResponse({'Hii', 'world!'}, safe=False)

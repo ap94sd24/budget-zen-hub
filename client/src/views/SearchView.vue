@@ -66,7 +66,11 @@
       >
         <template v-for="user in users" :key="user.id">
           <div class="p-4 text-center bg-gray-100 rounded-lg">
-            <img src="https://i.pravatar.cc/300?img=70" alt="" class="mb-6 rounded-full" />
+            <img
+              src="https://gravatar.com/avatar/5ac01b7cd1192f1c1c60bf84eab96570?s=300&d=robohash&r=x"
+              alt="Avatar for profile"
+              class="mb-6 rounded-full"
+            />
 
             <p class="font-bold">
               <RouterLink :to="{ name: 'profile', params: { id: user.id } }">{{
@@ -75,8 +79,8 @@
             </p>
 
             <div class="mt-6 flex space-x-8 justify-around">
-              <p class="text-xs text-gray-500">200 followers</p>
-              <p class="text-xs text-gray-500">100 posts</p>
+              <p class="text-xs text-gray-500">{{ user.followers_count }} followers</p>
+              <p class="text-xs text-gray-500">{{ user.posts_count }} posts</p>
             </div>
           </div>
         </template>

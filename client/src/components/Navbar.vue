@@ -8,7 +8,7 @@
   const { user } = storeToRefs(userStore);
 </script>
 <template>
-  <nav class="py-10 px-8 border-b border-gray-200">
+  <nav class="py-5 px-8 border-b border-gray-200">
     <div class="max-w-7xl mx-auto">
       <div class="flex items-center justify-between">
         <div class="menu-left">
@@ -88,7 +88,10 @@
         <div class="menu-right">
           <template v-if="user.isAuthenticated">
             <RouterLink :to="{ name: 'profile', params: { id: user.id } }">
-              <img src="https://i.pravatar.cc/40?img=2" class="rounded-full" />
+              <img
+                src="https://gravatar.com/avatar/5ac01b7cd1192f1c1c60bf84eab96570?s=50&d=robohash&r=x"
+                class="rounded-full"
+              />
             </RouterLink>
           </template>
           <template v-else>

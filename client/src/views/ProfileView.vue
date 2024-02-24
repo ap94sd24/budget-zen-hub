@@ -78,6 +78,7 @@
             class="text-xs text-gray-500"
             >{{ user?.followers_count }} followers</RouterLink
           >
+          <!--TODO: figure out why user.posts_count isn't working-->
           <p class="text-xs text-gray-500">{{ user.posts_count }} posts</p>
         </div>
         <div class="mt-6">
