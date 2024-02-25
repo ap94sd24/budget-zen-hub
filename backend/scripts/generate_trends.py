@@ -4,6 +4,8 @@ import os
 import sys
 
 from collections import Counter
+from datetime import timedelta
+from django.utils import timezone
 
 sys.path.append(os.path.join(os.path.abspath(os.path.dirname(__file__)), '..'))
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "backend.settings")
@@ -24,11 +26,14 @@ for trend in Trend.objects.all():
 
 trends = []
 
-for post in Post.objects.all():
+this_hour = timezone.now().replace(minute=0, second=0, microsecond=0)
+twenty_four_hours = this_hour - timedelta(hours=24)
+
+for post in Post.objects.filter(created_at__gte=(twenty_four_hours)):
   extract_hashtags(post.body, trends)
 
 
-for trend in  Counter(trends).most_common(10):
+for trend in Counter(trends).most_common(10):
   Trend.objects.create(hashtag=trend[0], occurrences=trend[1])
   
   

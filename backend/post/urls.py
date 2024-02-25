@@ -9,4 +9,5 @@ urlpatterns = [
     path('profile/<uuid:pk>/', api.post_list_profile, name='post_list_profile'),
     path('create/', api.post_create, name='post_create'),
     path('<uuid:pk>/', api.post_detail, name='post_detail'),
+    path('trends/', api.get_trends, name='get_trends'),
 ]

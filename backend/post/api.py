@@ -6,8 +6,8 @@ from account.models import User
 from account.serializers import UserSerializer
 
 from .forms import PostForm
-from .serializers import PostSerializer, PostDetailSerializer, CommentSerializer
-from .models import Post, Like, Comment
+from .serializers import PostSerializer, PostDetailSerializer, CommentSerializer, TrendSerializer
+from .models import Post, Like, Comment, Trend
 
 
 # Create your views here.
@@ -91,6 +91,12 @@ def post_create_comment(request, pk):
   post.save()
   
   serializer = CommentSerializer(comment)
+  
+  return JsonResponse(serializer.data, safe=False)
+
+@api_view(['GET'])
+def get_trends(request):
+  serializer = TrendSerializer(Trend.objects.all(), many=True)
   
   return JsonResponse(serializer.data, safe=False)
   
