@@ -5,7 +5,7 @@ import {
   sendMsgForActiveChat,
   sendDmRequest,
 } from '@/api/chat';
- 
+import { useRouter } from 'vue-router';
 
 export const useChatStore = defineStore({
   id: 'chat',

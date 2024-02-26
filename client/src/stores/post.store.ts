@@ -6,6 +6,7 @@ import {
   likePost,
   getPost,
   saveComment,
+  getPostTrends,
 } from '@/api/post';
 
 export const usePostStore = defineStore({
@@ -13,6 +14,7 @@ export const usePostStore = defineStore({
   state: (): any => ({
     posts: [],
     user: null,
+    trends: [],
   }),
   actions: {
     async getFeed() {
@@ -29,6 +31,17 @@ export const usePostStore = defineStore({
       }
     },
 
+    async getTrends() {
+      try {
+        const res = await getPostTrends();
+        if (res.data) {
+          console.log('Res data -> ' + JSON.stringify(res.data, null, 2));
+          this.trends = res.data;
+        }
+      } catch (error) {
+        console.error(error);
+      }
+    },
     async savePost(formData: any) {
       try {
         const res = await savePost({ body: formData });
