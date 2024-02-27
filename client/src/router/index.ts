@@ -8,6 +8,7 @@ import ProfileView from '@/views/ProfileView.vue';
 import FollowersView from '@/views/FollowersView.vue';
 import PostDetailView from '@/views/PostDetailView.vue';
 import ChatView from '@/views/ChatView.vue';
+import TrendView from '@/views/TrendView.vue';
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -21,6 +22,11 @@ const router = createRouter({
       path: '/:id',
       name: 'postdetailview',
       component: PostDetailView,
+    },
+    {
+      path: '/trends/:id',
+      name: 'trendview',
+      component: TrendView,
     },
     {
       path: '/feed',

@@ -7,6 +7,7 @@ import {
   getPost,
   saveComment,
   getPostTrends,
+  getAllTrendFeed,
 } from '@/api/post';
 
 export const usePostStore = defineStore({
@@ -17,6 +18,15 @@ export const usePostStore = defineStore({
     trends: [],
   }),
   actions: {
+    async getTrendFeed(hashtag: string) {
+      try {
+        const res = await getAllTrendFeed(hashtag);
+
+        if (res.data) this.posts = res.data;
+      } catch (error) {
+        console.error(error);
+      }
+    },
     async getFeed() {
       try {
         const res = await getAllPosts();
