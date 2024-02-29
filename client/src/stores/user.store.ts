@@ -3,6 +3,7 @@ import { getRefreshToken, getUserAccount, loginAccount, editProfile } from '@/ap
 import { useNotificationStore } from './notification.store';
 import axios from 'axios';
 import http from '@/utils/https';
+import { useRouter } from 'vue-router';
 
 export const useUserStore = defineStore({
   id: 'user',
@@ -57,13 +58,24 @@ export const useUserStore = defineStore({
       try {
         const res = await editProfile(formData);
 
+        const notificationStore = useNotificationStore();
         if (res.data.message === 'Information updated') {
-          const notificationStore = useNotificationStore();
           notificationStore.showNotification(5000, 'The information was saved!', 'bg-emerald-500');
 
           this.setUserInfo({ id: this.user.id, name: formData.name, email: formData.email });
+
+          return true;
+        } else {
+          notificationStore.showNotification(
+            5000,
+            `${res.data.message}. Please try again!`,
+            'bg-red-300'
+          );
+          return false;
         }
-      } catch (error) {}
+      } catch (error) {
+        console.error(error);
+      }
     },
 
     setUserInfo(user: any) {
