@@ -62,7 +62,13 @@ export const useUserStore = defineStore({
         if (res.data.message === 'Information updated!') {
           notificationStore.showNotification(5000, 'The information was saved!', 'bg-emerald-500');
 
-          this.setUserInfo({ id: this.user.id, name: formData.name, email: formData.email });
+          console.log('Form data name -> ' + formData.get('name'));
+          console.log('Form data email -> ' + formData.get('email'));
+          this.setUserInfo({
+            id: this.user.id,
+            name: formData.get('name'),
+            email: formData.get('email'),
+          });
 
           return true;
         } else {
