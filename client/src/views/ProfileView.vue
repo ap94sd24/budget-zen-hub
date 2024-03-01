@@ -96,6 +96,13 @@
           >
             Want to chat?
           </button>
+          <RouterLink
+            to="/profile/edit"
+            v-if="userStore.user.id === user?.id"
+            class="inline-block py-3 px-5 bg-gray-600 mr-2 dark:bg-gray-400 text-xs text-white rounded-lg"
+          >
+            Edit Profile
+          </RouterLink>
           <button
             v-if="userStore.user.id === user?.id"
             class="inline-block py-3 px-5 bg-red-600 dark:bg-red-400 text-xs text-white rounded-lg"

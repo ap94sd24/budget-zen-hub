@@ -10,7 +10,7 @@ export const loginAccount = async (data: any) => await http.post('/login/', JSON
 export const getUserAccount = async () => await http.get('/me/');
 
 export const editProfile = async (data: any) =>
-  await http.post(`/editprofile/`, JSON.stringify(data), {
+  await http.post(`/editprofile/`, data, {
     headers: {
       'Content-Type': 'multipart/form-data',
     },

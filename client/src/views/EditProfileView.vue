@@ -29,9 +29,12 @@
     if (errors.value.length === 0) {
       let formData = new FormData();
 
-      formData.append('avatar', file.value.files[0]);
+      //formData.append('avatar', file.value.files[0]);
       formData.append('name', form.value.name);
       formData.append('email', form.value.email);
+
+      console.log('Name -> ' + form.value.name);
+      console.log('Email -> ' + form.value.email);
 
       const res = await userStore.editUserProfile(formData);
 
@@ -87,7 +90,7 @@
           </template>
 
           <div>
-            <button class="py-4 px-6 bg-blue-600 text-white rounded-lg">Save changes</button>
+            <button class="py-4 px-6 bg-blue-600 text-white rounded-lg">Save</button>
           </div>
         </form>
       </div>

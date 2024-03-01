@@ -3,7 +3,6 @@ import { getRefreshToken, getUserAccount, loginAccount, editProfile } from '@/ap
 import { useNotificationStore } from './notification.store';
 import axios from 'axios';
 import http from '@/utils/https';
-import { useRouter } from 'vue-router';
 
 export const useUserStore = defineStore({
   id: 'user',
@@ -56,10 +55,11 @@ export const useUserStore = defineStore({
 
     async editUserProfile(formData: any) {
       try {
+        console.log('Form data -> ' + formData);
         const res = await editProfile(formData);
 
         const notificationStore = useNotificationStore();
-        if (res.data.message === 'Information updated') {
+        if (res.data.message === 'Information updated!') {
           notificationStore.showNotification(5000, 'The information was saved!', 'bg-emerald-500');
 
           this.setUserInfo({ id: this.user.id, name: formData.name, email: formData.email });
