@@ -55,15 +55,12 @@ export const useUserStore = defineStore({
 
     async editUserProfile(formData: any) {
       try {
-        console.log('Form data -> ' + formData);
         const res = await editProfile(formData);
 
         const notificationStore = useNotificationStore();
         if (res.data.message === 'Information updated!') {
           notificationStore.showNotification(5000, 'The information was saved!', 'bg-emerald-500');
 
-          console.log('Form data name -> ' + formData.get('name'));
-          console.log('Form data email -> ' + formData.get('email'));
           this.setUserInfo({
             id: this.user.id,
             name: formData.get('name'),

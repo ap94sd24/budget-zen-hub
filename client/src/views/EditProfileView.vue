@@ -33,9 +33,6 @@
       formData.append('name', form.value.name);
       formData.append('email', form.value.email);
 
-      console.log('Name -> ' + form.value.name);
-      console.log('Email -> ' + form.value.email);
-
       const res = await userStore.editUserProfile(formData);
 
       if (res) router.back();
