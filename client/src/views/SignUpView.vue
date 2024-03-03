@@ -1,63 +1,74 @@
 <script setup lang="ts">
-import { ref } from 'vue'
-import { useNotificationStore } from '@/stores/notification.store'
-import { signupAccount } from '@/api/account'
+  import { ref } from 'vue';
+  import { useNotificationStore } from '@/stores/notification.store';
+  import { signupAccount } from '@/api/account';
 
-const notifStore = useNotificationStore()
+  const notifStore = useNotificationStore();
 
-const form = ref({
-  email: '',
-  name: '',
-  password1: '',
-  password2: ''
-})
+  const form = ref({
+    email: '',
+    name: '',
+    password1: '',
+    password2: '',
+  });
 
-const errors: any = ref([])
+  const errors: any = ref([]);
 
-const resetForm = () => {
-  form.value.email = ''
-  form.value.name = ''
-  form.value.password1 = ''
-  form.value.password2 = ''
-}
+  const resetForm = () => {
+    form.value.email = '';
+    form.value.name = '';
+    form.value.password1 = '';
+    form.value.password2 = '';
+  };
 
-const formValidation = () => {
-  errors.value = []
+  const formValidation = () => {
+    errors.value = [];
 
-  if (form.value.email === '') {
-    errors.value.push('Your email is missing')
-  }
-
-  if (form.value.name === '') {
-    errors.value.push('Your name is missing')
-  }
-
-  if (form.value.password1 === '') {
-    errors.value.push('Your password is missing')
-  }
-
-  if (form.value.password1 !== form.value.password2) {
-    errors.value.push('Password does not match')
-  }
-}
-
-const submitForm = async () => {
-  formValidation()
-  if (errors.value.length === 0) {
-    try {
-      const res = await signupAccount(form.value)
-      console.log('Data--> ' + JSON.stringify(res.data, null, 2))
-      if (res.data.status === 'success') {
-        notifStore.showNotification(5000, 'The user is registered. Please login!', 'bg-emerald-500')
-        resetForm()
-      } else {
-        notifStore.showNotification(5000, 'Something went wrong. Please try again.', 'bg-red-300')
-      }
-    } catch (error) {
-      console.error(error)
+    if (form.value.email === '') {
+      errors.value.push('Your email is missing');
     }
-  }
-}
+
+    if (form.value.name === '') {
+      errors.value.push('Your name is missing');
+    }
+
+    if (form.value.password1 === '') {
+      errors.value.push('Your password is missing');
+    }
+
+    if (form.value.password1 !== form.value.password2) {
+      errors.value.push('Password does not match');
+    }
+  };
+
+  const submitForm = async () => {
+    formValidation();
+    if (errors.value.length === 0) {
+      try {
+        const res = await signupAccount(form.value);
+        if (res.data.status === 'success') {
+          notifStore.showNotification(
+            5000,
+            'The user is registered. Please login!',
+            'bg-emerald-500'
+          );
+          resetForm();
+        } else {
+          const errorObj = JSON.parse(res.data.message);
+          for (const key in errorObj) {
+            errors.value.push(errorObj[key][0].message);
+          }
+          notifStore.showNotification(
+            5000,
+            'Something went wrong. Please try again.',
+            'bg-red-300'
+          );
+        }
+      } catch (error) {
+        console.error(error);
+      }
+    }
+  };
 </script>
 <template>
   <div class="max-w-7xl mx-auto grid grid-cols-2 gap-4">

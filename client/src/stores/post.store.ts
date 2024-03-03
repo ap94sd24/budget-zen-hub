@@ -58,6 +58,7 @@ export const usePostStore = defineStore({
 
         if (res.data) {
           this.posts.unshift(res.data);
+          this.user.posts_count += 1;
         }
       } catch (error) {
         console.error(error);
@@ -84,6 +85,7 @@ export const usePostStore = defineStore({
           console.log('Res data -> ' + JSON.stringify(res.data, null, 2));
           this.posts = res.data.posts;
           this.user = res.data.user;
+          console.log('User obj -> ' + JSON.stringify(this.user, null, 2));
         }
       } catch (error) {
         console.error(error);

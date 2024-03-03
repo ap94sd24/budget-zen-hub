@@ -21,10 +21,7 @@
   <div class="max-w-7xl mx-auto grid grid-cols-4 gap-4">
     <div class="main-left col-span-1">
       <div class="p-4 bg-white border border-gray-200 text-center rounded-lg">
-        <img
-          src="https://gravatar.com/avatar/5ac01b7cd1192f1c1c60bf84eab96570?s=200&d=robohash&r=x"
-          class="mb-6 rounded-full"
-        />
+        <img :src="user.get_avatar" class="mb-6 rounded-full" />
 
         <p>
           <strong>{{ user.name }}</strong>
@@ -46,10 +43,7 @@
           v-for="req in followerRequests"
           :key="req.id"
         >
-          <img
-            src="https://gravatar.com/avatar/5ac01b7cd1192f1c1c60bf84eab96570?s=200&d=robohash&r=x"
-            class="mb-6 mx-auto rounded-full"
-          />
+          <img :src="req.created_by.get_avatar" class="mb-6 mx-auto rounded-full" />
 
           <p>
             <strong>
@@ -92,10 +86,7 @@
           v-for="user in followers"
           :key="user.id"
         >
-          <img
-            src="https://gravatar.com/avatar/5ac01b7cd1192f1c1c60bf84eab96570?s=300&d=robohash&r=x"
-            class="mb-6 rounded-full"
-          />
+          <img :src="user.get_avatar" class="mb-6 rounded-full" />
 
           <p>
             <strong>

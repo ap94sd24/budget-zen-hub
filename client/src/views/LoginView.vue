@@ -1,10 +1,8 @@
 <script setup lang="ts">
   import { ref } from 'vue';
   import { useUserStore } from '@/stores/user.store';
-  import { loginAccount, getUserAccount } from '@/api/account';
   import { useNotificationStore } from '@/stores/notification.store';
   import { useRouter } from 'vue-router';
-  import http from '@/utils/https';
 
   const router = useRouter();
 
@@ -39,9 +37,12 @@
     formValidation();
 
     if (errors.value.length === 0) {
-      await userStore.loginUser(form.value);
-      const isSuccess = await userStore.getUserInfo();
+      const res = await userStore.loginUser(form.value);
 
+      if (!res)
+        errors.value.push('The email or password is incorrect! Or the user does not exist!');
+
+      const isSuccess = await userStore.getUserInfo();
       if (isSuccess) router.push('/feed');
     }
   };
@@ -91,7 +92,7 @@
           </div>
 
           <template v-if="errors.length > 0">
-            <div class="bg-red-300 text-white rounded-lg p-6">
+            <div class="bg-red-400 text-white dark:bg-red-600 dark:text-black rounded-lg p-5">
               <p v-for="error in errors" :key="error">{{ error }}</p>
             </div>
           </template>

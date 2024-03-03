@@ -62,11 +62,7 @@
   <div class="max-w-7xl mx-auto grid grid-cols-4 gap-4">
     <div class="main-left col-span-1">
       <div class="p-4 bg-white border border-gray-200 text-center rounded-lg">
-        <img
-          src="https://gravatar.com/avatar/5ac01b7cd1192f1c1c60bf84eab96570?s=400&d=robohash&r=x"
-          alt="Avatar img"
-          class="mb-6 rounded-full"
-        />
+        <img :src="user.get_avatar" alt="Avatar img" class="mb-6 rounded-full" />
 
         <p class="font-bold">
           {{ user?.name }}
@@ -79,7 +75,7 @@
             >{{ user?.followers_count }} followers</RouterLink
           >
           <!--TODO: figure out why user.posts_count isn't working-->
-          <p class="text-xs text-gray-500">{{ user.posts_count }} posts</p>
+          <p class="text-xs text-gray-500">{{ user?.posts_count }} posts</p>
         </div>
         <div class="mt-6">
           <button

@@ -15,3 +15,10 @@ export const editProfile = async (data: any) =>
       'Content-Type': 'multipart/form-data',
     },
   });
+
+export const editAccountPassword = async (data: any) =>
+  await http.post(`/editpassword/`, data, {
+    headers: {
+      'Content-Type': 'multipart/form-data',
+    },
+  });

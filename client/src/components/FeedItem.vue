@@ -1,8 +1,11 @@
 <script setup lang="ts">
   import { usePostStore } from '@/stores/post.store';
+  import { storeToRefs } from 'pinia';
   defineProps(['post']);
 
   const postStore = usePostStore();
+
+  const { user } = storeToRefs(postStore);
 
   const likePost = async (id: string) => {
     await postStore.likePost(id);
@@ -11,11 +14,7 @@
 <template>
   <div class="mb-6 flex items-center justify-between">
     <div class="flex item-center space-x-6">
-      <img
-        src="https://gravatar.com/avatar/5ac01b7cd1192f1c1c60bf84eab96570?s=400&d=robohash&r=x"
-        alt=""
-        class="w-[40px] rounded-full"
-      />
+      <img :src="post.created_by.get_avatar" alt="" class="w-[40px] rounded-full" />
       <p>
         <strong>{{ post?.created_by.name }}</strong>
       </p>
@@ -23,11 +22,6 @@
     <div class="text-gray-600 text-sm">{{ post?.created_at_formatted }} ago</div>
   </div>
 
-  <!-- <img
-            src="https://images.unsplash.com/photo-1633158829585-23ba8f7c8caf?q=80&w=3570&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-            alt=""
-            class="w-full rounded-bg"
-          /> -->
   <p>{{ post?.body }}</p>
 
   <div class="my-6 flex justify-between">

@@ -88,10 +88,7 @@
         <div class="menu-right">
           <template v-if="user.isAuthenticated">
             <RouterLink :to="{ name: 'profile', params: { id: user.id } }">
-              <img
-                src="https://gravatar.com/avatar/5ac01b7cd1192f1c1c60bf84eab96570?s=50&d=robohash&r=x"
-                class="rounded-full"
-              />
+              <img :src="user.avatar" class="w-12 rounded-full" />
             </RouterLink>
           </template>
           <template v-else>

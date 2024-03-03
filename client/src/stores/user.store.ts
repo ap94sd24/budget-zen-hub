@@ -1,5 +1,11 @@
 import { defineStore } from 'pinia';
-import { getRefreshToken, getUserAccount, loginAccount, editProfile } from '@/api/account';
+import {
+  getRefreshToken,
+  getUserAccount,
+  loginAccount,
+  editProfile,
+  editAccountPassword,
+} from '@/api/account';
 import { useNotificationStore } from './notification.store';
 import axios from 'axios';
 import http from '@/utils/https';
@@ -14,6 +20,7 @@ export const useUserStore = defineStore({
       email: null,
       access: null,
       refresh: null,
+      avatar: null,
     },
   }),
   actions: {
@@ -24,6 +31,7 @@ export const useUserStore = defineStore({
         this.user.id = localStorage.getItem('user.id');
         this.user.name = localStorage.getItem('user.name');
         this.user.email = localStorage.getItem('user.email');
+        this.user.avatar = localStorage.getItem('user.avatar');
         this.user.isAuthenticated = true;
 
         this.refreshToken();
@@ -42,15 +50,17 @@ export const useUserStore = defineStore({
       this.user.refresh = null;
       this.user.access = null;
       this.user.isAuthenticated = false;
-      this.user.id = false;
-      this.user.name = false;
-      this.user.email = false;
+      this.user.id = null;
+      this.user.name = null;
+      this.user.email = null;
+      this.user.avatar = null;
 
       localStorage.setItem('user.access', '');
       localStorage.setItem('user.refresh', '');
       localStorage.setItem('user.id', '');
       localStorage.setItem('user.name', '');
       localStorage.setItem('user.email', '');
+      localStorage.setItem('user.avatar', '');
     },
 
     async editUserProfile(formData: any) {
@@ -61,10 +71,12 @@ export const useUserStore = defineStore({
         if (res.data.message === 'Information updated!') {
           notificationStore.showNotification(5000, 'The information was saved!', 'bg-emerald-500');
 
+          console.log('User data -> ' + JSON.stringify(res.data.user, null, 2));
           this.setUserInfo({
             id: this.user.id,
             name: formData.get('name'),
             email: formData.get('email'),
+            avatar: res.data.user.get_avatar,
           });
 
           return true;
@@ -81,27 +93,59 @@ export const useUserStore = defineStore({
       }
     },
 
+    async updateAccountPassword(formData: any) {
+      console.log('Enter here!');
+      try {
+        const res = await editAccountPassword(formData);
+        const notificationStore = useNotificationStore();
+        if (res.data.message === 'success') {
+          notificationStore.showNotification(
+            5000,
+            'The information was updated!',
+            'bg-emerald-500'
+          );
+
+          return { status: 'success' };
+        } else {
+          // notificationStore.showNotification(
+          //   5000,
+          //   `${res.data.message}. Please try again!`,
+          //   'bg-red-300'
+          // );
+          return { status: 'failed', messageObj: JSON.parse(res.data.message) };
+        }
+      } catch (error) {
+        console.error(error);
+
+        return false;
+      }
+    },
+
     setUserInfo(user: any) {
       this.user.id = user.id;
       this.user.name = user.name;
       this.user.email = user.email;
+      this.user.avatar = user.avatar;
 
       localStorage.setItem('user.id', this.user.id);
       localStorage.setItem('user.name', this.user.name);
       localStorage.setItem('user.email', this.user.email);
+      localStorage.setItem('user.avatar', this.user.avatar);
     },
 
     async loginUser(data: any) {
       try {
         const res = await loginAccount(data);
-        console.log('Res data is rn-> ' + JSON.stringify(res.data, null, 2));
+
         if (res.data) {
           this.setToken(res.data);
-          console.log('Res data -> ' + JSON.stringify(res.data, null, 2));
+
           http.defaults.headers.common['Authorization'] = 'Bearer ' + res.data.access;
+          return true;
         }
       } catch (error) {
         console.error(error);
+        return false;
       }
     },
 

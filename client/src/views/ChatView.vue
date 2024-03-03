@@ -34,12 +34,8 @@
             @click="chatStore.setActiveConversation(conversation.id)"
           >
             <div class="flex items-center space-x-2">
-              <img
-                src="https://i.pravatar.cc/300?img=70"
-                alt="Gravatar img"
-                class="w-[40px] rounded-full"
-              />
               <template v-for="userObj in conversation.users" :key="user.id">
+                <img :src="userObj.get_avatar" alt="Gravatar img" class="w-[40px] rounded-full" />
                 <p v-if="user.id !== userObj.id" class="text-xs font-bold">{{ user.name }}</p>
               </template>
             </div>
@@ -68,7 +64,7 @@
               </div>
               <div class="flex-shrink-0 h-11 w-11 rounded-full bg-gray-300">
                 <img
-                  src="https://i.pravatar.cc/300?img=50"
+                  :src="message.created_by.get_avatar"
                   alt="Pravatar image"
                   class="w-[45px] rounded-full"
                 />
@@ -77,7 +73,7 @@
             <div class="flex w-full mt-2 space-x-3 max-w-md mr-auto" v-else>
               <div class="flex-shrink-0 h-11 w-11 rounded-full bg-gray-300">
                 <img
-                  src="https://i.pravatar.cc/300?img=40"
+                  :src="message.created_by.get_avatar"
                   alt="Pravatar image"
                   class="w-[45px] rounded-full"
                 />

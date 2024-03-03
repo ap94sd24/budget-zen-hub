@@ -66,11 +66,7 @@
       >
         <template v-for="user in users" :key="user.id">
           <div class="p-4 text-center bg-gray-100 rounded-lg">
-            <img
-              src="https://gravatar.com/avatar/5ac01b7cd1192f1c1c60bf84eab96570?s=300&d=robohash&r=x"
-              alt="Avatar for profile"
-              class="mb-6 rounded-full"
-            />
+            <img :src="user.get_avatar" alt="Avatar for profile" class="mb-6 rounded-full" />
 
             <p class="font-bold">
               <RouterLink :to="{ name: 'profile', params: { id: user.id } }">{{
