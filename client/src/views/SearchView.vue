@@ -15,7 +15,6 @@
       console.log('Query -> ' + query.value);
       const res = await searchQuery({ query: query.value });
 
-      console.log('Res data -> ' + JSON.stringify(res.data, null, 2));
       if (res.data) {
         users.value = res.data.users;
         posts.value = res.data.posts;

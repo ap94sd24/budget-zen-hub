@@ -45,7 +45,6 @@ export const usePostStore = defineStore({
       try {
         const res = await getPostTrends();
         if (res.data) {
-          console.log('Res data -> ' + JSON.stringify(res.data, null, 2));
           this.trends = res.data;
         }
       } catch (error) {
@@ -68,7 +67,7 @@ export const usePostStore = defineStore({
     async likePost(id: string) {
       try {
         const res = await likePost(id);
-        console.log('Res data -> ' + JSON.stringify(res.data, null, 2));
+
         if (res.data.message === 'like created') {
           const postIdx = this.posts.findIndex((p: any) => p.id === id);
           this.posts[postIdx].likes_count += 1;
@@ -82,10 +81,8 @@ export const usePostStore = defineStore({
         const res = await getAllPostsForUser(id);
 
         if (res.data) {
-          console.log('Res data -> ' + JSON.stringify(res.data, null, 2));
           this.posts = res.data.posts;
           this.user = res.data.user;
-          console.log('User obj -> ' + JSON.stringify(this.user, null, 2));
         }
       } catch (error) {
         console.error(error);

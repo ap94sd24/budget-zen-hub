@@ -2,6 +2,7 @@ from django.urls import path
 from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
 
 from . import api
+from . import views
 
 urlpatterns = [
   path('me/', api.me, name='me'),

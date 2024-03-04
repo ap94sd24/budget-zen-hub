@@ -52,7 +52,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     if self.avatar:
       return 'http://127.0.0.1:8000' + self.avatar.url
     else:
-      return ''
+      return 'https://st3.depositphotos.com/6672868/13701/v/450/depositphotos_137014128-stock-illustration-user-profile-icon.jpg'
   
   
 class FollowerRequest(models.Model): 

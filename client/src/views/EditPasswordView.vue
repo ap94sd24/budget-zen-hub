@@ -36,9 +36,9 @@
         for (const key in res.messageObj) {
           errors.value.push(res.messageObj[key][0].message);
         }
+      } else {
+        router.push(`/profile/${user.value.id}`);
       }
-
-      //if (res) router.push(`/profile/${user.value.id}`);
     }
   };
 </script>

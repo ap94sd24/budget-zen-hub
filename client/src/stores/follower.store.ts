@@ -19,8 +19,6 @@ export const useFollowerStore = defineStore({
         if (res.data.message === 'request already made!') {
           notificationStore.showNotification(5000, 'Request already sent!', 'bg-red-300');
         }
-
-        if (res.data) console.log('Res data -> ' + JSON.stringify(res.data, null, 2));
       } catch (error) {
         console.error(error);
       }

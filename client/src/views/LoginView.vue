@@ -40,8 +40,9 @@
       const res = await userStore.loginUser(form.value);
 
       if (!res)
-        errors.value.push('The email or password is incorrect! Or the user does not exist!');
+        errors.value.push('The email or password is incorrect! Or the user is not activated!');
 
+      console.log('Enter here!!');
       const isSuccess = await userStore.getUserInfo();
       if (isSuccess) router.push('/feed');
     }

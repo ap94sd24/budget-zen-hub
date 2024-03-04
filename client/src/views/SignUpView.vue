@@ -46,10 +46,11 @@
     if (errors.value.length === 0) {
       try {
         const res = await signupAccount(form.value);
-        if (res.data.status === 'success') {
+
+        if (res.data.message === 'success') {
           notifStore.showNotification(
             5000,
-            'The user is registered. Please login!',
+            'The user is registered. Please activate your account by clicking your email link!',
             'bg-emerald-500'
           );
           resetForm();

@@ -28,8 +28,14 @@
   const { posts, user } = storeToRefs(postStore);
 
   const body = ref('');
+  const file: any = ref<HTMLElement | null>(null);
 
   const submitForm = async () => {
+    let formData = new FormData();
+    formData.append('avatar', file.value.files[0]);
+    formData.append('body', body.value);
+
+    // TODO: update endpoint to accept file upload
     await postStore.savePost(body.value);
     body.value = '';
   };
@@ -62,7 +68,7 @@
   <div class="max-w-7xl mx-auto grid grid-cols-4 gap-4">
     <div class="main-left col-span-1">
       <div class="p-4 bg-white border border-gray-200 text-center rounded-lg">
-        <img :src="user.get_avatar" alt="Avatar img" class="mb-6 rounded-full" />
+        <img :src="user?.get_avatar" alt="Avatar img" class="mb-6 rounded-full" />
 
         <p class="font-bold">
           {{ user?.name }}
@@ -126,6 +132,7 @@
               <button href="#" class="inline-block py-2 px-5 bg-gray-600 text-white rounded-lg">
                 Attach image
               </button>
+              <input type="file" ref="file" />
 
               <button href="#" class="inline-block py-2 px-5 bg-blue-600 text-white rounded-lg">
                 Post
