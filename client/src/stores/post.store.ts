@@ -53,14 +53,16 @@ export const usePostStore = defineStore({
     },
     async savePost(formData: any) {
       try {
-        const res = await savePost({ body: formData });
+        const res = await savePost(formData);
 
         if (res.data) {
           this.posts.unshift(res.data);
           this.user.posts_count += 1;
+          return true;
         }
       } catch (error) {
         console.error(error);
+        return false;
       }
     },
 

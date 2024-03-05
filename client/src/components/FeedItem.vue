@@ -22,6 +22,15 @@
     <div class="text-gray-600 text-sm">{{ post?.created_at_formatted }} ago</div>
   </div>
 
+  <template v-if="post.attachments.length > 0">
+    <img
+      v-for="image in post.attachments"
+      :key="image.id"
+      :src="image.get_image"
+      alt="Image of post"
+      class="w-full mb-4 rounded-xl"
+    />
+  </template>
   <p>{{ post?.body }}</p>
 
   <div class="my-6 flex justify-between">
