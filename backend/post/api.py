@@ -3,11 +3,14 @@ from django.http import JsonResponse
 from rest_framework.decorators import api_view, authentication_classes, permission_classes
 
 from account.models import User
+from .models import Post, Like, Comment, Trend
+
 from account.serializers import UserSerializer
+from .serializers import PostSerializer, PostDetailSerializer, CommentSerializer, TrendSerializer
 
 from .forms import PostForm, AttachmentForm
-from .serializers import PostSerializer, PostDetailSerializer, CommentSerializer, TrendSerializer
-from .models import Post, Like, Comment, Trend
+
+from notification.utils import create_notification
 
 
 # Create your views here.
@@ -89,6 +92,8 @@ def post_like(request, pk):
     post.likes_count = post.likes_count + 1
     post.likes.add(like)
     post.save()
+    
+    notification =  create_notification(request, 'post_like', post_id=post.id)
   
     return JsonResponse({'message': 'like created'})
   else:

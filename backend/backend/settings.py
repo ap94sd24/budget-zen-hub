@@ -57,6 +57,7 @@ INSTALLED_APPS = [
     'post',
     'chat',
     'search',
+    'notification',
     'rest_framework',
     'rest_framework_simplejwt',
     'corsheaders'
