@@ -3,33 +3,33 @@ from .models import Notification
 from post.models import Post
 from account.models import FollowerRequest
 
-def create_notification(request, type_of_notifcation, post_id=None, followerrequest_id=None):
+def create_notification(request, type_of_notification, post_id=None, followerrequest_id=None):
   created_for = None
   
-  if type_of_notifcation == 'post_like':
+  if type_of_notification == 'post_like':
     body = f'{request.user.name} liked one of your posts!'
     post = Post.objects.get(pk=post_id)
     created_for = post.created_by
-  elif type_of_notifcation == 'post_comment':
+  elif type_of_notification == 'post_comment':
     body = f'{request.user.name} commented one of your posts!'
     post = Post.objects.get(pk=post_id)
     created_for = post.created_by
-  elif type_of_notifcation == 'newfollowerrequest':
+  elif type_of_notification == 'newfollowerrequest':
     followerrequest = FollowerRequest.objects.get(pk=followerrequest_id)
     created_for = followerrequest.created_for
     body = f'{request.user.name} send you a follower request!'
-  elif type_of_notifcation == 'acceptedfollowerrequest':
+  elif type_of_notification == 'acceptedfollowerrequest':
     followerrequest = FollowerRequest.objects.get(pk=followerrequest_id)
     created_for = followerrequest.created_for
     body = f'{request.user.name} accepted your follower request!'
-  elif type_of_notifcation == 'rejectedfollowerrequest':
+  elif type_of_notification == 'rejectedfollowerrequest':
     followerrequest = FollowerRequest.objects.get(pk=followerrequest_id)
     created_for = followerrequest.created_for
     body = f'{request.user.name} rejected your follower request!'
     
   notification = Notification.objects.create(
     body = body,
-    type_of_notifcation = type_of_notifcation,
+    type_of_notification = type_of_notification,
     created_by = request.user,
     post_id=post_id,
     created_for = created_for

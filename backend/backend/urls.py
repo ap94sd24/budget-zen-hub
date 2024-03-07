@@ -12,4 +12,5 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/chat/', include('chat.urls')),
     path('activateemail/', activateemail, name='activateemail'),
+    path('api/notifications/', include('notification.urls')),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

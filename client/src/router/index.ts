@@ -11,6 +11,7 @@ import ChatView from '@/views/ChatView.vue';
 import TrendView from '@/views/TrendView.vue';
 import EditProfileView from '@/views/EditProfileView.vue';
 import EditPasswordView from '@/views/EditPasswordView.vue';
+import NotificationsView from '@/views/NotificationsView.vue';
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -34,6 +35,11 @@ const router = createRouter({
       path: '/feed',
       name: 'feed',
       component: FeedView,
+    },
+    {
+      path: '/notifications',
+      name: 'notifications',
+      component: NotificationsView,
     },
     {
       path: '/chat',
