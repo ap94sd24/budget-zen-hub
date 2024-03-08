@@ -12,7 +12,13 @@ def notifications(request):
   
   return JsonResponse(serializer.data, safe=False)
 
-
-#TODO create read notification api 
+ 
+@api_view(['POST'])
+def read_notification(request, pk):
+  notification = Notification.objects.filter(created_for=request.user).get(pk=pk)
+  notification.is_read = True
+  notification.save()
+  
+  return JsonResponse({'message': 'notification read'})
 
   

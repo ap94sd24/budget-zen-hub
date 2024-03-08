@@ -4,6 +4,7 @@ from django.core.mail import send_mail
 
 from rest_framework.decorators import api_view, authentication_classes, permission_classes
 
+from notification.utils import create_notification
 from .forms import SignupForm, ProfileForm
 from .models import User, FollowerRequest
 from .serializers import UserSerializer, FollowerRequestSerializer
@@ -80,7 +81,9 @@ def send_follower_request(request, pk):
   alreadyAFollower = FollowerRequest.objects.filter(created_for=user).filter(created_by=request.user)
   
   if not followerReqMade and not alreadyAFollower:
-    follower_request = FollowerRequest.objects.create(created_for=user, created_by=request.user)
+    followerrequest = FollowerRequest.objects.create(created_for=user, created_by=request.user)
+    
+    notification =  create_notification(request, 'new_followerrequest', followerrequest_id=followerrequest.id)
   
     return JsonResponse({'message': 'Follower added!'})
   else: 
@@ -100,6 +103,8 @@ def handle_request(request, pk, status):
   request_user = request.user
   request_user.followers_count = request_user.followers_count + 1
   request_user.save()
+  
+  notification =  create_notification(request, 'accepted_followerrequest', followerrequest_id=follower_request.id)
   
   return JsonResponse({'message': 'Follower updated!'})
 

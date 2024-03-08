@@ -2,15 +2,28 @@
   import { onMounted } from 'vue';
   import { useNotificationStore } from '@/stores/notification.store';
   import { storeToRefs } from 'pinia';
+  import { useRouter } from 'vue-router';
   const notifcationStore = useNotificationStore();
+
+  const router = useRouter();
 
   const { notifications } = storeToRefs(notifcationStore);
   onMounted(async () => {
     await notifcationStore.getNotificationsForUser();
   });
 
-const readNotification = async (notif: any) => {
-    
+  const readNotification = async (notification: any) => {
+    await notifcationStore.readNotification(notification.id);
+
+    if (
+      notification.type_of_notification === 'post_like' ||
+      notification.type_of_notification === 'post_comment'
+    ) {
+      console.log('Notif id -> ' + notification.post_id);
+      router.push({ name: 'postdetailview', params: { id: notification.post_id } });
+    } else {
+      router.push({ name: 'followers', params: { id: notification.created_for_id } });
+    }
   };
 </script>
 <template>

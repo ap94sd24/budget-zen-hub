@@ -14,15 +14,15 @@ def create_notification(request, type_of_notification, post_id=None, followerreq
     body = f'{request.user.name} commented one of your posts!'
     post = Post.objects.get(pk=post_id)
     created_for = post.created_by
-  elif type_of_notification == 'newfollowerrequest':
+  elif type_of_notification == 'new_followerrequest':
     followerrequest = FollowerRequest.objects.get(pk=followerrequest_id)
     created_for = followerrequest.created_for
     body = f'{request.user.name} send you a follower request!'
-  elif type_of_notification == 'acceptedfollowerrequest':
+  elif type_of_notification == 'accepted_followerrequest':
     followerrequest = FollowerRequest.objects.get(pk=followerrequest_id)
     created_for = followerrequest.created_for
     body = f'{request.user.name} accepted your follower request!'
-  elif type_of_notification == 'rejectedfollowerrequest':
+  elif type_of_notification == 'rejected_followerrequest':
     followerrequest = FollowerRequest.objects.get(pk=followerrequest_id)
     created_for = followerrequest.created_for
     body = f'{request.user.name} rejected your follower request!'
