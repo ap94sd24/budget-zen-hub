@@ -80,7 +80,7 @@ def send_follower_request(request, pk):
   followerReqMade = FollowerRequest.objects.filter(created_for=request.user).filter(created_by=user)
   alreadyAFollower = FollowerRequest.objects.filter(created_for=user).filter(created_by=request.user)
   
-  if not followerReqMade and not alreadyAFollower:
+  if not followerReqMade or not alreadyAFollower:
     followerrequest = FollowerRequest.objects.create(created_for=user, created_by=request.user)
     
     notification =  create_notification(request, 'new_followerrequest', followerrequest_id=followerrequest.id)
@@ -139,5 +139,10 @@ def edit_password(request):
   else: 
     return JsonResponse({'message': form.errors.as_json()}, safe=False)
     
+@api_view(['GET'])
+def my_suggested_followers(request):
+  serializer = UserSerializer(request.user.people_you_may_know.all(), many=True)
+  
+  return JsonResponse(serializer.data, safe=False)
   
   

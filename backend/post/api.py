@@ -1,8 +1,9 @@
+from django.db.models import Q
 from django.http import JsonResponse
 
 from rest_framework.decorators import api_view, authentication_classes, permission_classes
 
-from account.models import User
+from account.models import User, FollowerRequest
 from .models import Post, Like, Comment, Trend
 
 from account.serializers import UserSerializer
@@ -33,18 +34,34 @@ def post_list(request):
   return JsonResponse(serializer.data, safe=False)
 
 @api_view(['GET'])
-def post_list_profile(request, pk):
-  user = User.objects.get(pk=pk)
-  posts = Post.objects.filter(created_by_id=pk)
+def post_list_profile(request, id):
+  user = User.objects.get(pk=id)
+  posts = Post.objects.filter(created_by_id=id)
   
-  
-  
+  # if ur a follower see all posts
+  # if ur not a follower, only see public posts
+  if not request.user in user.followers.all():
+    posts = posts.filter(is_private=False)
+      
   posts_serializer = PostSerializer(posts, many=True)
   user_serializer = UserSerializer(user)
   
+  can_send_follower_request = True
+  
+  if request.user in user.followers.all():
+    can_send_follower_request = False
+    
+  followerReqMade = FollowerRequest.objects.filter(created_for=request.user).filter(created_by=user)
+  alreadyAFollower = FollowerRequest.objects.filter(created_for=user).filter(created_by=request.user)
+  
+  if followerReqMade or alreadyAFollower:
+    can_send_follower_request = False
+  
+  
   return JsonResponse({
     'posts': posts_serializer.data, 
-    'user': user_serializer.data
+    'user': user_serializer.data,
+    'can_send_follower_request': can_send_follower_request
   }, safe=False)
 
 @api_view(['POST'])
@@ -101,7 +118,12 @@ def post_like(request, pk):
   
 @api_view(['GET'])
 def post_detail(request, pk):
-  post = Post.objects.get(pk=pk)
+  user_ids = [request.user.id]
+  
+  for user in request.user.followers.all():
+      user_ids.append(user.id)
+      
+  post = Post.objects.filter(Q(created_by_id__in=list(user_ids)) | Q(is_private=False)).get(pk=pk)
   
   return JsonResponse({
     'post': PostDetailSerializer(post).data

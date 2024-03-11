@@ -1,4 +1,5 @@
 import { defineStore } from 'pinia';
+
 import {
   getAllPosts,
   getAllPostsForUser,
@@ -16,8 +17,13 @@ export const usePostStore = defineStore({
     posts: [],
     user: null,
     trends: [],
+    can_send_follower_request: null,
+    is_private: false,
   }),
   actions: {
+    setCanSendFollowerRequestStatus(status: boolean) {
+      this.can_send_follower_request = status;
+    },
     async getTrendFeed(hashtag: string) {
       try {
         const res = await getAllTrendFeed(hashtag);
@@ -86,6 +92,7 @@ export const usePostStore = defineStore({
         if (res.data) {
           this.posts = res.data.posts;
           this.user = res.data.user;
+          this.can_send_follower_request = res.data.can_send_follower_request;
         }
       } catch (error) {
         console.error(error);
