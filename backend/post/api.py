@@ -27,7 +27,7 @@ def post_list(request):
   trend = request.GET.get('trend', '')
   
   if trend: 
-    posts = posts.filter(body__icontains='#'+trend)
+    posts = posts.filter(body__icontains='#'+trend).filter(is_private=False)
   
   serializer = PostSerializer(posts, many=True)
   
@@ -41,6 +41,7 @@ def post_list_profile(request, id):
   # if ur a follower see all posts
   # if ur not a follower, only see public posts
   if not request.user in user.followers.all():
+    print('Enter here!?!?')
     posts = posts.filter(is_private=False)
       
   posts_serializer = PostSerializer(posts, many=True)

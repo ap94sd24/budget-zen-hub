@@ -63,7 +63,7 @@ export const usePostStore = defineStore({
 
         if (res.data) {
           this.posts.unshift(res.data);
-          console.log('User -> ' + JSON.stringify(this.user, null, 2));
+
           if (this.user) this.user.posts_count += 1;
           return true;
         }
