@@ -12,7 +12,6 @@
 
   const submitForm = async () => {
     try {
-      console.log('Query -> ' + query.value);
       const res = await searchQuery({ query: query.value });
 
       if (res.data) {

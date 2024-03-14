@@ -71,7 +71,6 @@ export const useUserStore = defineStore({
         if (res.data.message === 'Information updated!') {
           notificationStore.showNotification(5000, 'The information was saved!', 'bg-emerald-500');
 
-          console.log('User data -> ' + JSON.stringify(res.data.user, null, 2));
           this.setUserInfo({
             id: this.user.id,
             name: formData.get('name'),
@@ -94,7 +93,6 @@ export const useUserStore = defineStore({
     },
 
     async updateAccountPassword(formData: any) {
-      console.log('Enter here!');
       try {
         const res = await editAccountPassword(formData);
         const notificationStore = useNotificationStore();
@@ -122,7 +120,6 @@ export const useUserStore = defineStore({
     },
 
     setUserInfo(user: any) {
-      console.log('USER IS -> ' + JSON.stringify(user, null, 2));
       this.user.id = user.id;
       this.user.name = user.name;
       this.user.email = user.email;
@@ -137,7 +134,7 @@ export const useUserStore = defineStore({
     async loginUser(data: any) {
       try {
         const res = await loginAccount(data);
-        console.log('Res -> ' + JSON.stringify(res.data, null, 2));
+
         if (res.data) {
           this.setToken(res.data);
 
@@ -153,9 +150,8 @@ export const useUserStore = defineStore({
     async getUserInfo() {
       try {
         const res = await getUserAccount();
-        console.log('Get user info -> ' + JSON.stringify(res.data, null, 2));
+
         if (res.data) {
-          console.log('Setting user info!');
           this.setUserInfo(res.data);
           return true;
         }

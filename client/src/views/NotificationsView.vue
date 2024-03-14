@@ -19,7 +19,6 @@
       notification.type_of_notification === 'post_like' ||
       notification.type_of_notification === 'post_comment'
     ) {
-      console.log('Notif id -> ' + notification.post_id);
       router.push({ name: 'postdetailview', params: { id: notification.post_id } });
     } else {
       router.push({ name: 'followers', params: { id: notification.created_for_id } });

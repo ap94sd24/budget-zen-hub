@@ -1,5 +1,7 @@
 import { defineStore } from 'pinia';
 
+import { useNotificationStore } from './notification.store';
+
 import {
   getAllPosts,
   getAllPostsForUser,
@@ -8,6 +10,8 @@ import {
   getPost,
   saveComment,
   getPostTrends,
+  deletePost,
+  reportPost,
   getAllTrendFeed,
 } from '@/api/post';
 
@@ -21,6 +25,35 @@ export const usePostStore = defineStore({
     is_private: false,
   }),
   actions: {
+    async reportPost(id: string) {
+      const notificationStore = useNotificationStore();
+      try {
+        const res = await reportPost(id);
+        if (res.data.status === 'success') {
+          // send a notif that the post is reported
+          notificationStore.showNotification(5000, `${res.data.message}`, 'bg-emerald-500');
+        }
+      } catch (error) {
+        console.error(error);
+      }
+    },
+    async deletePostForUser(id: string) {
+      const notificationStore = useNotificationStore();
+      try {
+        const res = await deletePost(id);
+
+        if (res.data.status === 'success') {
+          // remove from store
+          const postIdx = this.posts.findIndex((p: any) => p.id === id);
+          this.posts.splice(postIdx, 1);
+          // send a notif that the post is deleted
+          notificationStore.showNotification(2000, `${res.data.message}`, 'bg-emerald-500');
+        }
+      } catch (error) {
+        console.error(error);
+      }
+    },
+
     setCanSendFollowerRequestStatus(status: boolean) {
       this.can_send_follower_request = status;
     },

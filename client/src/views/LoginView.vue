@@ -42,7 +42,7 @@
       if (!res)
         errors.value.push('The email or password is incorrect! Or the user is not activated!');
 
-      console.log('Enter here!!');
+     
       const isSuccess = await userStore.getUserInfo();
       if (isSuccess) router.push('/feed');
     }

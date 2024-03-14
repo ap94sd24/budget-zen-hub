@@ -150,4 +150,18 @@ def get_trends(request):
   serializer = TrendSerializer(Trend.objects.all(), many=True)
   
   return JsonResponse(serializer.data, safe=False)
+
+@api_view(['DELETE'])
+def delete_post(request, pk):
+  post = Post.objects.filter(created_by=request.user).get(pk=pk)
+  post.delete()
   
+  return JsonResponse({'message': 'Post deleted!', 'status': 'success'})
+
+@api_view(['POST'])
+def report_post(request, pk):
+  post = Post.objects.get(pk=pk)
+  post.reported_by_users.add(request.user)
+  post.save()
+  
+  return JsonResponse({'message': 'Post reported!', 'status': 'success'})

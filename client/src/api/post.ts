@@ -24,3 +24,7 @@ export const saveComment = async (id: string, data: any) =>
   await http.post(`${rootUrl}/${id}/comment/`, JSON.stringify({ body: data }));
 
 export const getPostTrends = async () => await http.get(`${rootUrl}/trends/`);
+
+export const deletePost = async (id: string) => await http.delete(`${rootUrl}/${id}/delete/`);
+
+export const reportPost = async (id: string) => await http.post(`${rootUrl}/${id}/report/`);
