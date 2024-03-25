@@ -5,7 +5,9 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "run-p type-check \"build-only {@}\" --",
+    "start": "node app.ts",
+    "prestart": "npm run build",
+    "build": "npx vite build",
     "preview": "vite preview",
     "test:unit": "vitest",
     "test:e2e": "start-server-and-test preview http://localhost:4173 'cypress run --e2e'",
@@ -16,7 +18,9 @@
     "format": "prettier --write src/"
   },
   "dependencies": {
+    "express": "^4.19.2",
     "pinia": "^2.1.7",
+    "serve-static": "^2.0.0-beta.2",
     "vue": "^3.3.11",
     "vue-router": "^4.2.5"
   },
