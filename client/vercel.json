@@ -1,8 +1,8 @@
 {
   "rewrites": [
     {
-      "source": "/api",
-      "destination": "https://django-test-deployment-lovat.vercel.app"
+      "source": "/api/(.*)",
+      "destination": "https://django-test-deployment-lovat.vercel.app/api/$1"
     }
   ]
 }
