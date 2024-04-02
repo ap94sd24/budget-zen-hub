@@ -1,18 +1,19 @@
 env
 .vscode
 
-# Environments 
-backend/.env 
-backend/.venv 
-backend/env/ 
-backend/venv/ 
-backend/ENV/ 
-backend/env.bak/ 
-backend/venv.bak/ 
+# Backend files and dir to ignore
+/backend/.env 
+/backend/.gitignore
+/backend/.venv 
+/backend/env/ 
+/backend/venv/ 
+/backend/ENV/ 
+/backend/env.bak/ 
+/backend/venv.bak/ 
 
-backend/.vercel
-backend/*.log
-backend/*.pyc
-backend/__pycache__
-backend/db.sqlite3
-backend/media
+/backend/.vercel
+/backend/*.log
+/backend/*.pyc
+/backend/__pycache__
+/backend/db.sqlite3
+/backend/media
