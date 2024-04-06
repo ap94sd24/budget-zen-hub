@@ -42,21 +42,20 @@
       if (!res)
         errors.value.push('The email or password is incorrect! Or the user is not activated!');
 
-     
       const isSuccess = await userStore.getUserInfo();
       if (isSuccess) router.push('/feed');
     }
   };
 </script>
 <template>
-  <div class="max-w-7xl mx-auto grid grid-cols-2 gap-4">
+  <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-4">
     <div class="main-left">
-      <div class="p-12 bg-white border border-gray-200 rounded-lg">
+      <div class="p-6 md:p-12 bg-white border border-gray-200 rounded-lg">
         <h1 class="mb-6 text-2xl">Sign in</h1>
 
         <p class="mb-6 text-gray-500">
-          dsfad asdfa fasd fadfdsf dasf asdfds dff f adsfd saf adsfd dsfad asdfa fasd fadfdsf dasf
-          asdfds dff f adsfd saf adsfd
+          Welcome back! Login to access a community of like-minded people looking to budget, and
+          grow their assets!
         </p>
 
         <p class="font-bold">
@@ -67,7 +66,7 @@
       </div>
     </div>
     <div class="main-right">
-      <div class="p-12 bg-white border border-gray-200 rounded-lg">
+      <div class="p-6 md:p-12 bg-white border border-gray-200 rounded-lg">
         <form @submit.prevent="submitForm" class="space-y-6">
           <div>
             <label for="email"> E-mail</label>
@@ -81,7 +80,7 @@
             />
           </div>
           <div>
-            <label for="email"> Password</label>
+            <label for="password"> Password</label>
             <input
               type="password"
               name="password"
@@ -99,7 +98,7 @@
           </template>
 
           <div>
-            <button class="py-4 px-6 bg-blue-600 text-white rounded-lg">Login</button>
+            <button class="py-4 px-6 bg-blue-600 text-white rounded-lg w-full">Login</button>
           </div>
         </form>
       </div>
