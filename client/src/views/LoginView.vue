@@ -48,7 +48,7 @@
   };
 </script>
 <template>
-  <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-4">
+  <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 md:gap-4">
     <div class="main-left">
       <div class="p-6 md:p-12 bg-white border border-gray-200 rounded-lg">
         <h1 class="mb-6 text-2xl">Sign in</h1>

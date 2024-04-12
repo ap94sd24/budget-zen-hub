@@ -140,7 +140,7 @@
             </div>
           </template>
           <div>
-            <button type="submit" class="w-full py-3 px-6 bg-blue-600 text-white rounded-lg">
+            <button type="submit" class="w-full py-3 px-6 bg-gray-600 text-white rounded-lg">
               Sign up
             </button>
           </div>
