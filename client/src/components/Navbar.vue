@@ -19,7 +19,7 @@
     <div class="max-w-7xl mx-auto">
       <div class="flex items-center justify-between">
         <div class="menu-left">
-          <a href="#" class="text-xl">BudgetZenHub </a>
+          <RouterLink to="/feed">BudgetZenHub</RouterLink>
         </div>
 
         <div class="hidden md:flex items-center space-x-12 menu-center">

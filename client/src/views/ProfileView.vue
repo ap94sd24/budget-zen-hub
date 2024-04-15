@@ -58,9 +58,7 @@
       <div class="p-4 bg-white border border-gray-200 text-center rounded-lg">
         <img :src="user?.get_avatar" alt="Avatar img" class="mb-6 rounded-full" />
 
-        <p class="font-bold">
-          {{ user?.name }}
-        </p>
+        <p class="font-bold">{{ user?.name }}</p>
 
         <div class="mt-6 flex space-x-8 justify-around">
           <RouterLink

@@ -33,7 +33,7 @@
     <div class="flex item-center space-x-6">
       <img :src="post.created_by.get_avatar" alt="" class="w-[40px] rounded-full" />
       <p>
-        <strong>{{ post?.created_by.name }}</strong>
+        <strong>{{ post?.created_by.name }} </strong>
       </p>
     </div>
     <div class="text-gray-600 text-sm">{{ post?.created_at_formatted }} ago</div>
