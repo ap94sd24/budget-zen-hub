@@ -32,7 +32,7 @@
 </script>
 
 <template>
-  <div class="bg-white border border-gray-200 rounded-lg">
+  <div class="w-full sm:p-0 sm:m-0 bg-white border border-gray-200 rounded-lg">
     <form @submit.prevent="submitForm" method="post">
       <div class="p-4">
         <textarea

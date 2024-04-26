@@ -72,7 +72,7 @@
   };
 </script>
 <template>
-  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 md:grid-cols-2 gap-4">
+  <div class="max-w-7xl mx-auto md:px-4 sm:px-6 lg:px-8 grid grid-cols-1 md:grid-cols-2 md:gap-4">
     <div class="main-left">
       <div class="p-6 md:p-12 bg-white border border-gray-200 rounded-lg">
         <h1 class="mb-4 text-2xl md:text-3xl">Sign Up</h1>
