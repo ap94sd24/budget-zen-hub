@@ -19,7 +19,11 @@
 </script>
 <template>
   <div class="max-w-7xl mx-auto grid grid-cols-4 gap-4">
-    <div class="main-center col-span-3 space-y-6">
+    <div class="main-right col-span-4 md:col-span-1 md:order-2 md:space-y-4">
+      <PeopleToConnect />
+      <Trends />
+    </div>
+    <div class="main-center col-span-4 md:col-span-3 md:order-1 space-y-6">
       <FeedForm />
       <template v-for="post in posts" :key="post?.id">
         <div class="p-4 bg-white border border-gray-200 rounded-lg">
@@ -27,15 +31,5 @@
         </div>
       </template>
     </div>
-
-    <div class="main-right col-span-1 space-y-4">
-      <PeopleToConnect />
-      <Trends />
-    </div>
   </div>
 </template>
-<style scoped>
-  input[type='file'] {
-    display: none;
-  }
-</style>

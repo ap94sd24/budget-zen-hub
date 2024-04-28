@@ -30,8 +30,13 @@
   );
 </script>
 <template>
-  <div class="max-w-7xl mx-auto grid grid-cols-4 gap-4">
-    <div class="main-center col-span-3 space-y-4">
+  <div class="max-w-7xl mx-auto grid grid-cols-4 md:gap-4">
+    <div class="col-span-4 md:col-span-1 md:order-2 md:space-y-4">
+      <PeopleToConnect />
+
+      <Trends />
+    </div>
+    <div class="col-span-4 md:col-span-3 md:order-1 md:space-y-4">
       <div class="p-4 bg-white border border-gray-200 rounded-lg">
         <h2 class="text-xl">Trend: #{{ $route.params.id }}</h2>
       </div>
@@ -43,12 +48,6 @@
       >
         <FeedItem v-bind:post="post" />
       </div>
-    </div>
-
-    <div class="main-right col-span-1 space-y-4">
-      <PeopleToConnect />
-
-      <Trends />
     </div>
   </div>
 </template>

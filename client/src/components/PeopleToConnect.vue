@@ -12,10 +12,19 @@
   });
 </script>
 <template>
-  <div class="w-full md:p-4 bg-white border border-gray-200 rounded-lg">
-    <h3 class="mb-6 text-xl">People to Connect</h3>
+  <div class="w-full p-4 bg-white border border-gray-200 rounded-lg">
+    <h3 class="mb-6 text-center md:text-left text-xl">People to Follow</h3>
 
     <div class="space-y-4">
+      <template v-if="suggestedUsers.length === 0">
+        <div class="text-center md:text-left">
+          No suggestions found. <br />
+          Find more users to follow here: <br />
+          <router-link to="/search" class="text-blue-700 hover:text-blue-900 hover:underline"
+            >Search</router-link
+          >
+        </div>
+      </template>
       <div class="flex items-center justify-between" v-for="user in suggestedUsers" :key="user.id">
         <div class="flex items-center space-x-2">
           <img :src="user.get_avatar" class="w-[40px] rounded-full" />

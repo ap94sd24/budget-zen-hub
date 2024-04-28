@@ -18,8 +18,13 @@
   });
 </script>
 <template>
-  <div class="max-w-7xl mx-auto grid grid-cols-4 gap-4">
-    <div class="main-left col-span-1">
+  <div class="max-w-7xl mx-auto grid grid-cols-4 md:gap-4">
+    <div class="col-span-4 md:col-span-1 md:order-3 md:space-y-4">
+      <PeopleToConnect />
+
+      <Trends />
+    </div>
+    <!-- <div class="col-span-4 md:col-span-1 md:order-1">
       <div class="p-4 bg-white border border-gray-200 text-center rounded-lg">
         <img :src="user.get_avatar" class="mb-6 rounded-full" />
 
@@ -32,9 +37,9 @@
           <p class="text-xs text-gray-500">{{ user.posts_count }} posts</p>
         </div>
       </div>
-    </div>
+    </div> -->
 
-    <div class="main-center col-span-2 space-y-4">
+    <div class="col-span-4 md:col-span-2 md:space-y-4 md-order-2">
       <div class="p-4 bg-white border border-gray-200 rounded-lg" v-if="followerRequests.length">
         <h2 class="mb-6 text-xl">Followers requests</h2>
 
@@ -102,12 +107,6 @@
           </div>
         </div>
       </div>
-    </div>
-
-    <div class="main-right col-span-1 space-y-4">
-      <PeopleToConnect />
-
-      <Trends />
     </div>
   </div>
 </template>

@@ -43,8 +43,8 @@
   };
 </script>
 <template>
-  <div class="max-w-7xl mx-auto grid grid-cols-2 gap-4">
-    <div class="main-left">
+  <div class="max-w-7xl mx-auto grid grid-cols-2 md:gap-4">
+    <div class="col-span-2 md:col-span-1">
       <div class="p-12 bg-white border border-gray-200 rounded-lg">
         <h1 class="mb-6 text-2xl">Edit password</h1>
 
@@ -52,7 +52,7 @@
       </div>
     </div>
 
-    <div class="main-right">
+    <div class="col-span-2 md:col-span-1">
       <div class="p-12 bg-white border border-gray-200 rounded-lg">
         <form class="space-y-6" @submit.prevent="submitForm">
           <div>

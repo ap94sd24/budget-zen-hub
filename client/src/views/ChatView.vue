@@ -19,12 +19,14 @@
   });
 
   const submitForm = async () => {
-    await chatStore.sendMessage(body.value);
+    const res = await chatStore.sendMessage(body.value);
+
+    if (res) body.value = '';
   };
 </script>
 <template>
-  <div class="max-w-7xl mx-auto grid grid-cols-4 gap-4">
-    <div class="main-left col-span-1">
+  <div class="max-w-7xl mx-auto grid grid-cols-4 md:gap-4">
+    <div class="col-span-4 md:col-span-1">
       <div class="p-4 bg-white border border-gray-200 rounded-lg">
         <div class="space-y-4">
           <div
@@ -35,8 +37,10 @@
           >
             <div class="flex items-center space-x-2">
               <template v-for="userObj in conversation.users" :key="user.id">
-                <img :src="userObj.get_avatar" alt="Gravatar img" class="w-[40px] rounded-full" />
-                <p v-if="user.id !== userObj.id" class="text-xs font-bold">{{ user.name }}</p>
+                <template v-if="user.id !== userObj.id">
+                  <img :src="userObj.get_avatar" alt="Gravatar img" class="w-[40px] rounded-full" />
+                  <p class="text-xs font-bold">{{ userObj.name }}</p>
+                </template>
               </template>
             </div>
 
@@ -46,7 +50,7 @@
       </div>
     </div>
 
-    <div class="main-center col-span-3 space-y-4">
+    <div class="col-span-4 md:col-span-3 md:pace-y-4">
       <div class="bg-white border border-gray-200 rounded-lg">
         <div class="flex flex-col flex-grow p-4">
           <template v-for="message in activeConversation.messages" :key="message.id">
@@ -91,7 +95,8 @@
         </div>
       </div>
 
-      <div class="bg-white border border-gray-200 rounded-lg">
+      <!--TODO: make this bottom sticky on both mobile and desktop-->
+      <div class="f bg-white border border-gray-200 rounded-lg">
         <form @submit.prevent="submitForm">
           <div class="p-4">
             <textarea

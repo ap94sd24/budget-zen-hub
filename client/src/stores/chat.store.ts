@@ -54,7 +54,10 @@ export const useChatStore = defineStore({
       try {
         const res = await sendMsgForActiveChat(this.activeConversation.id, body);
 
-        if (res.data) this.activeConversation.messages.push(res.data);
+        if (res.data) {
+          this.activeConversation.messages.push(res.data);
+          return true;
+        }
       } catch (error) {
         console.error(error);
       }

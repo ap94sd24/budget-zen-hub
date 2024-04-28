@@ -1,17 +1,22 @@
 <script setup lang="ts">
-  import { ref } from 'vue';
-  import { RouterLink } from 'vue-router';
+  import { onMounted, ref, watch } from 'vue';
+  import { RouterLink, useRoute } from 'vue-router';
   import { useUserStore } from '@/stores/user.store';
   import { storeToRefs } from 'pinia';
 
   import logo from '@/assets/images/logo_v2.png';
 
   const userStore = useUserStore();
+  const route = useRoute();
 
   const { user } = storeToRefs(userStore);
 
   const showHiddenElement = ref(false);
 
+  watch(route, (to, from) => {
+    // You can perform any actions based on the route change here
+    showHiddenElement.value = false;
+  });
   const toggleMenu = () => {
     showHiddenElement.value = !showHiddenElement.value;
   };
@@ -224,7 +229,7 @@
             </RouterLink>
           </div>
         </template>
-        <template>
+        <template v-else>
           <div class="md:hidden flex items-center justify-center w-full mt-4">
             <RouterLink
               to="/login"

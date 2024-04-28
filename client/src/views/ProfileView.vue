@@ -53,8 +53,8 @@
   };
 </script>
 <template>
-  <div class="max-w-7xl mx-auto grid grid-cols-4 gap-4">
-    <div class="main-left col-span-1">
+  <div class="max-w-7xl mx-auto grid grid-cols-4 md:gap-4">
+    <div class="main-left col-span-4 md:col-span-1 md:order-1">
       <div class="p-4 bg-white border border-gray-200 text-center rounded-lg">
         <img :src="user?.get_avatar" alt="Avatar img" class="mb-6 rounded-full" />
 
@@ -72,7 +72,7 @@
         <div class="mt-6">
           <button
             v-if="userStore.user.id !== user?.id && can_send_follower_request"
-            class="inline-block py-3 px-5 bg-blue-600 text-xs text-white rounded-lg"
+            class="inline-block py-3 px-5 bg-blue-600 text-xs text-white rounded-lg me-3"
             @click="sendFollowerRequest"
           >
             Send follower request
@@ -101,7 +101,11 @@
         </div>
       </div>
     </div>
-    <div class="main-center col-span-2 space-y-4">
+    <div class="main-right col-span-4 md:col-span-1 md:order-3 md:space-y-4">
+      <PeopleToConnect />
+      <Trends />
+    </div>
+    <div class="main-center col-span-4 md:col-span-2 md:order-2 space-y-4">
       <template v-if="userStore.user.id === user?.id">
         <FeedForm />
       </template>
@@ -111,11 +115,6 @@
           <FeedItem :post="post" />
         </div>
       </template>
-    </div>
-
-    <div class="main-right col-span-1 space-y-4">
-      <PeopleToConnect />
-      <Trends />
     </div>
   </div>
 </template>

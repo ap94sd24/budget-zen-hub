@@ -24,8 +24,12 @@
   };
 </script>
 <template>
-  <div class="max-w-7xl mx-auto grid grid-cols-4 gap-4">
-    <div class="main-left col-span-3 space-y-4">
+  <div class="max-w-7xl mx-auto grid grid-cols-4 md:gap-4">
+    <div class="col-span-4 md:col-span-1 md:order-2 md:space-y-4">
+      <PeopleToConnect />
+      <Trends />
+    </div>
+    <div class="col-span-4 md:col-span-3 md:order-1 md:space-y-4">
       <div class="bg-white border border-gray-200">
         <form @submit.prevent="submitForm" class="p-4 flex space-x-0">
           <input
@@ -59,22 +63,24 @@
       </div>
 
       <div
-        class="p-4 bg-white border border-gray-200 rounded-lg grid grid-cols-4 gap-4"
+        class="p-4 bg-white border border-gray-200 rounded-lg grid grid-cols-4 md:gap-4"
         v-if="users.length > 0"
       >
         <template v-for="user in users" :key="user.id">
-          <div class="p-4 text-center bg-gray-100 rounded-lg">
-            <img :src="user.get_avatar" alt="Avatar for profile" class="mb-6 rounded-full" />
+          <div class="col-span-2 md:col-span-1 m-1">
+            <div class="p-4 text-center bg-gray-100 rounded-lg">
+              <img :src="user.get_avatar" alt="Avatar for profile" class="mb-6 rounded-full" />
 
-            <p class="font-bold">
-              <RouterLink :to="{ name: 'profile', params: { id: user.id } }">{{
-                user.name
-              }}</RouterLink>
-            </p>
+              <p class="font-bold">
+                <RouterLink :to="{ name: 'profile', params: { id: user.id } }">{{
+                  user.name
+                }}</RouterLink>
+              </p>
 
-            <div class="mt-6 flex space-x-8 justify-around">
-              <p class="text-xs text-gray-500">{{ user.followers_count }} followers</p>
-              <p class="text-xs text-gray-500">{{ user.posts_count }} posts</p>
+              <div class="mt-6 flex space-x-8 justify-around">
+                <p class="text-xs text-gray-500">{{ user.followers_count }} followers</p>
+                <p class="text-xs text-gray-500">{{ user.posts_count }} posts</p>
+              </div>
             </div>
           </div>
         </template>
@@ -84,10 +90,6 @@
           <FeedItem :post="post" />
         </div>
       </template>
-    </div>
-    <div class="main-right col-span-1 space-y-4">
-      <PeopleToConnect />
-      <Trends />
     </div>
   </div>
 </template>
