@@ -72,8 +72,6 @@ export const usePostStore = defineStore({
 
         if (res.data) {
           this.posts = res.data;
-
-          console.log('Posts -> ' + JSON.stringify(this.posts, null, 2));
         }
       } catch (error) {
         console.error(error);
@@ -144,7 +142,6 @@ export const usePostStore = defineStore({
 
     async saveCommentForPost(id: string, body: any) {
       try {
-        console.log('Body -> ' + JSON.stringify(body, null, 2));
         const res = await saveComment(id, body);
 
         return res.data;

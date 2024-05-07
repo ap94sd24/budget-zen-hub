@@ -14,7 +14,7 @@ export const useNotificationStore = defineStore({
     async getNotificationsForUser() {
       try {
         const res = await getNotifications();
-        console.log('Notification list -> ' + JSON.stringify(res.data, null, 2));
+
         if (res.data) this.notifications = res.data;
       } catch (error) {
         console.error(error);
@@ -23,7 +23,6 @@ export const useNotificationStore = defineStore({
     async readNotification(id: string) {
       try {
         const res = await setReadNotification(id);
-        console.log('Res for read notif -> ' + JSON.stringify(res.data, null, 2));
       } catch (error) {
         console.error(error);
       }

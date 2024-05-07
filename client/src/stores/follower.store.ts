@@ -66,8 +66,6 @@ export const useFollowerStore = defineStore({
         } else {
           notificationStore.showNotification(5000, `Request has been ${status}!`, 'bg-emerald-300');
         }
-
-        if (res.data) console.log('Data -> ' + JSON.stringify(res.data, null, 2));
       } catch (error) {
         console.error(error);
       }
